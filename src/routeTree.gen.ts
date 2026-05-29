@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegisterIndexRouteImport } from './routes/register/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
-import { Route as RegisterDoctorLoginRouteImport } from './routes/register/doctor/login'
+import { Route as RegisterPatientRegisterRouteImport } from './routes/register/patient/register'
+import { Route as RegisterDoctorRegisterRouteImport } from './routes/register/doctor/register'
+import { Route as LoginPatientLoginRouteImport } from './routes/login/patient/login'
 import { Route as LoginDoctorLoginRouteImport } from './routes/login/doctor/login'
 
 const IndexRoute = IndexRouteImport.update({
@@ -30,9 +32,19 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RegisterDoctorLoginRoute = RegisterDoctorLoginRouteImport.update({
-  id: '/register/doctor/login',
-  path: '/register/doctor/login',
+const RegisterPatientRegisterRoute = RegisterPatientRegisterRouteImport.update({
+  id: '/register/patient/register',
+  path: '/register/patient/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterDoctorRegisterRoute = RegisterDoctorRegisterRouteImport.update({
+  id: '/register/doctor/register',
+  path: '/register/doctor/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginPatientLoginRoute = LoginPatientLoginRouteImport.update({
+  id: '/login/patient/login',
+  path: '/login/patient/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginDoctorLoginRoute = LoginDoctorLoginRouteImport.update({
@@ -46,14 +58,18 @@ export interface FileRoutesByFullPath {
   '/login/': typeof LoginIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/login/doctor/login': typeof LoginDoctorLoginRoute
-  '/register/doctor/login': typeof RegisterDoctorLoginRoute
+  '/login/patient/login': typeof LoginPatientLoginRoute
+  '/register/doctor/register': typeof RegisterDoctorRegisterRoute
+  '/register/patient/register': typeof RegisterPatientRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginIndexRoute
   '/register': typeof RegisterIndexRoute
   '/login/doctor/login': typeof LoginDoctorLoginRoute
-  '/register/doctor/login': typeof RegisterDoctorLoginRoute
+  '/login/patient/login': typeof LoginPatientLoginRoute
+  '/register/doctor/register': typeof RegisterDoctorRegisterRoute
+  '/register/patient/register': typeof RegisterPatientRegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,7 +77,9 @@ export interface FileRoutesById {
   '/login/': typeof LoginIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/login/doctor/login': typeof LoginDoctorLoginRoute
-  '/register/doctor/login': typeof RegisterDoctorLoginRoute
+  '/login/patient/login': typeof LoginPatientLoginRoute
+  '/register/doctor/register': typeof RegisterDoctorRegisterRoute
+  '/register/patient/register': typeof RegisterPatientRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -70,21 +88,27 @@ export interface FileRouteTypes {
     | '/login/'
     | '/register/'
     | '/login/doctor/login'
-    | '/register/doctor/login'
+    | '/login/patient/login'
+    | '/register/doctor/register'
+    | '/register/patient/register'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
     | '/register'
     | '/login/doctor/login'
-    | '/register/doctor/login'
+    | '/login/patient/login'
+    | '/register/doctor/register'
+    | '/register/patient/register'
   id:
     | '__root__'
     | '/'
     | '/login/'
     | '/register/'
     | '/login/doctor/login'
-    | '/register/doctor/login'
+    | '/login/patient/login'
+    | '/register/doctor/register'
+    | '/register/patient/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -92,7 +116,9 @@ export interface RootRouteChildren {
   LoginIndexRoute: typeof LoginIndexRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
   LoginDoctorLoginRoute: typeof LoginDoctorLoginRoute
-  RegisterDoctorLoginRoute: typeof RegisterDoctorLoginRoute
+  LoginPatientLoginRoute: typeof LoginPatientLoginRoute
+  RegisterDoctorRegisterRoute: typeof RegisterDoctorRegisterRoute
+  RegisterPatientRegisterRoute: typeof RegisterPatientRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -118,11 +144,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/register/doctor/login': {
-      id: '/register/doctor/login'
-      path: '/register/doctor/login'
-      fullPath: '/register/doctor/login'
-      preLoaderRoute: typeof RegisterDoctorLoginRouteImport
+    '/register/patient/register': {
+      id: '/register/patient/register'
+      path: '/register/patient/register'
+      fullPath: '/register/patient/register'
+      preLoaderRoute: typeof RegisterPatientRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register/doctor/register': {
+      id: '/register/doctor/register'
+      path: '/register/doctor/register'
+      fullPath: '/register/doctor/register'
+      preLoaderRoute: typeof RegisterDoctorRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login/patient/login': {
+      id: '/login/patient/login'
+      path: '/login/patient/login'
+      fullPath: '/login/patient/login'
+      preLoaderRoute: typeof LoginPatientLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login/doctor/login': {
@@ -140,7 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginIndexRoute: LoginIndexRoute,
   RegisterIndexRoute: RegisterIndexRoute,
   LoginDoctorLoginRoute: LoginDoctorLoginRoute,
-  RegisterDoctorLoginRoute: RegisterDoctorLoginRoute,
+  LoginPatientLoginRoute: LoginPatientLoginRoute,
+  RegisterDoctorRegisterRoute: RegisterDoctorRegisterRoute,
+  RegisterPatientRegisterRoute: RegisterPatientRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
