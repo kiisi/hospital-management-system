@@ -39,13 +39,13 @@ export function Navbar() {
                     {/* Desktop actions */}
                     <div className="hidden lg:flex items-center gap-3">
                         <a
-                            href="/sign-in"
+                            href="/login"
                             className="px-5 py-3 text-sm font-semibold text-primary border border-primary/30 rounded-xl hover:bg-primary-light transition-all duration-200"
                         >
                             Log In
                         </a>
                         <a
-                            href="#"
+                            href="/register"
                             className="px-5 py-3 text-sm font-semibold text-white bg-primary rounded-xl hover:bg-primary-dark transition-all duration-200"
                         >
                             Book Appointment
