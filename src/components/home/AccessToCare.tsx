@@ -47,7 +47,7 @@ export function AccessToCare() {
                   <figure>
                     <img src={item.image} alt={item.title} className="h-[320px] w-full object-cover" />
                   </figure>
-                  <div className="lg:p-[24px] flex-1 flex flex-col">
+                  <div className="p-[24px] flex-1 flex flex-col">
                     <div className='my-auto'>
                       <span className="inline-block self-start px-3 py-1 text-[11px] font-medium tracking-widest uppercase text-primary bg-primary-light rounded-full mb-4">
                         {item.tag}
