@@ -15,7 +15,7 @@ function RouteComponent() {
         />
       </figure>
       <div className="py-10 px-10 flex flex-col -items-center">
-        <div className="my-auto">
+        <div className="my-auto w-full max-w-[768px]">
           <h1 className="text-[32px] font-bold font-mont">
             Register to Blue<span className="text-primary">Care</span>
           </h1>
