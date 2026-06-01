@@ -3,8 +3,8 @@ import { Hero } from '../components/home/Hero'
 import { Services } from '../components/home/Services'
 import { AccessToCare } from '../components/home/AccessToCare'
 import { WhoBenefits } from '../components/home/WhoBenefits'
-import { Navbar } from '#/components/layout/Navbar'
-import { Footer } from '#/components/layout/Footer'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 
 export const Route = createFileRoute('/')({ component: Home })
 

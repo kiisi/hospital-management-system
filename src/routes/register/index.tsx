@@ -21,7 +21,7 @@ function RouteComponent() {
           </h1>
           <p className="mb-10">Please select how you'd like to continue</p>
           <a
-            href="/login/patient"
+            href="/register/patient"
             className="mb-4 h-[48px] rounded-xl border-[1px] border-primary text-primary flex items-center justify-center"
           >
             Continue as a Patient
@@ -30,7 +30,7 @@ function RouteComponent() {
             </svg>
           </a>
           <a
-            href="/login/doctor"
+            href="/register/doctor"
             className="h-[48px] rounded-xl bg-primary text-white flex items-center justify-center"
           >
             Continue as a Doctor

@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/Input'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/login/doctor/')({
   component: RouteComponent,
@@ -44,6 +44,9 @@ function RouteComponent() {
             >
               Login
             </button>
+            <p className='text-[#505c7e] text-center text-[14px] lg:text-[16px]'>
+              Don't have an account?  <Link to="/register/doctor" className='text-primary hover:underline'>Sign up</Link>
+            </p>
           </form>
         </div>
       </div>

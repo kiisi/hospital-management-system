@@ -82,13 +82,13 @@ export function Navbar() {
                     </ul>
                     <div className="px-4 pb-4 flex flex-col gap-2.5">
                         <a
-                            href="#"
+                            href="/login"
                             className="w-full text-center px-5 py-2.5 text-sm font-semibold text-primary border border-primary/30 rounded-xl hover:bg-primary-light transition-colors"
                         >
                             Log In
                         </a>
                         <a
-                            href="#"
+                            href="/register"
                             className="w-full text-center px-5 py-2.5 text-sm font-semibold text-white bg-primary rounded-xl hover:bg-primary-dark transition-colors"
                         >
                             Get Started

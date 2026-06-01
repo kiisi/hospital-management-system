@@ -2,9 +2,11 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import PostHogProvider from '../integrations/posthog/provider'
+// import PostHogProvider from '../integrations/posthog/provider'
 
 import appCss from '../styles.css?url'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { AuthProvider } from '@/contexts/auth'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -45,6 +47,20 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 })
 
+const queryClient = new QueryClient(
+  {
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        // refetchOnReconnect: true,
+        refetchOnMount: false,
+        staleTime: 1000 * 60 * 1, 
+        // gcTime: 1000 * 60 * 60 * 24, 
+      },
+    },
+  }
+);
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -52,9 +68,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <PostHogProvider>
-          {children}
-          {/* <TanStackDevtools
+        {/* <PostHogProvider> */}
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </QueryClientProvider>
+
+        {/* <TanStackDevtools
             config={{
               position: 'bottom-right',
             }}
@@ -65,7 +86,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               },
             ]}
           /> */}
-        </PostHogProvider>
+        {/* </PostHogProvider> */}
         <Scripts />
       </body>
     </html>
