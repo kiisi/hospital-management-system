@@ -45,7 +45,7 @@ export const Route = createFileRoute('/register/patient/')({
           if (existingUser) {
             return Response.json({
               success: false,
-              message: "An account already exists",
+              message: "Account already exists",
             }, { status: 409 })
           }
 
