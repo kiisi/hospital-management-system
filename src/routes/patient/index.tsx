@@ -29,7 +29,8 @@ import {
   DollarSign,
   ArrowUpRight,
   ArrowDownRight,
-  MoreHorizontal
+  MoreHorizontal,
+  AlertCircle
 } from 'lucide-react'
 
 export const Route = createFileRoute('/patient/')({
@@ -106,8 +107,8 @@ function PatientLayout() {
     {
       title: "Upcoming Appointments",
       value: "2",
-      change: "+1 from last month",
-      changeType: "increase",
+      // change: "+1 from last month",
+      // changeType: "increase",
       icon: Calendar,
       bgColor: "bg-blue-50",
       iconColor: "text-[#346ED6]"
@@ -115,25 +116,25 @@ function PatientLayout() {
     {
       title: "Active Prescriptions",
       value: "1",
-      change: "No change",
+      // change: "No change",
       changeType: "neutral",
       icon: Pill,
       bgColor: "bg-green-50",
       iconColor: "text-green-600"
     },
     {
-      title: "Pending Bills",
-      value: "$150.00",
-      change: "-$50 from last bill",
-      changeType: "decrease",
-      icon: CreditCard,
-      bgColor: "bg-orange-50",
-      iconColor: "text-orange-600"
+      title: "Health Score",
+      value: "92%",
+      // change: "+5% improvement",
+      changeType: "increase",
+      icon: Heart,
+      bgColor: "bg-rose-50",
+      iconColor: "text-rose-600",
     },
     {
       title: "Medical Records",
       value: "12",
-      change: "+2 new records",
+      // change: "+2 new records",
       changeType: "increase",
       icon: FileText,
       bgColor: "bg-purple-50",
@@ -247,36 +248,35 @@ function PatientLayout() {
       {/* Page Content */}
       <main className="p-4 sm:p-6 lg:p-8">
         {/* Welcome Section */}
-        <div className="mb-6 sm:mb-8">
-          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg shadow-blue-200">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div className="mb-6 sm:mb-8 space-y-4">
+          {/* Welcome Banner */}
+          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-xl p-5 sm:p-6 text-white">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold">Welcome back, {patient.firstName}! 👋</h2>
+                <h2 className="text-lg sm:text-xl font-bold">Welcome back, {patient.firstName}! 👋</h2>
                 <p className="mt-1 text-blue-100 text-sm">Here's your health overview for today</p>
               </div>
-              <div className="mt-4 sm:mt-0 flex flex-wrap gap-2">
-                <button className="bg-white text-[#346ED6] px-4 py-2 rounded-lg font-medium text-sm hover:bg-blue-50 transition-colors">
-                  View Records
-                </button>
-                <button className="bg-blue-500/30 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-blue-500/40 transition-colors backdrop-blur-sm">
-                  Emergency Contact
-                </button>
-              </div>
+              <button className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-white/30 transition-colors border border-white/20">
+                Book Appointment
+              </button>
             </div>
+          </div>
 
-            {/* Quick Info Cards */}
-            <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { label: 'Blood Group', value: patientInfo.bloodGroup },
-                { label: 'Age', value: `${patientInfo.age} years` },
-                { label: 'Last Visit', value: patientInfo.lastVisit },
-                { label: 'Next Appointment', value: 'Jan 15, 2025' }
-              ].map((info, index) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
-                  <p className="text-xs text-blue-100">{info.label}</p>
-                  <p className="text-sm font-semibold mt-1">{info.value}</p>
-                </div>
-              ))}
+          {/* Profile Update Warning */}
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0">
+                <AlertCircle size={20} className="text-amber-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-amber-800">Complete Your Profile</h3>
+                <p className="text-xs text-amber-600 mt-1">
+                  Your profile is incomplete. Update your emergency contact and medical history to ensure better care.
+                </p>
+              </div>
+              <button className="flex-shrink-0 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-medium hover:bg-amber-200 transition-colors">
+                Update Now
+              </button>
             </div>
           </div>
         </div>
@@ -284,25 +284,14 @@ function PatientLayout() {
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 sm:mb-8">
           {quickStats.map((stat, index) => (
-            <div key={index} className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+            <div key={index} className="bg-white rounded-xl p-5 border border-gray-100">
               <div className="flex items-center justify-between mb-3">
                 <div className={`${stat.bgColor} p-2.5 rounded-lg`}>
                   <stat.icon className={`h-5 w-5 ${stat.iconColor}`} />
                 </div>
-                <button className="text-gray-400 hover:text-gray-600">
-                  <MoreHorizontal size={16} />
-                </button>
               </div>
+              <p className="text-sm text-gray-500 font-medium mb-1">{stat.title}</p>
               <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-              <div className="flex items-center space-x-1 mt-1">
-                {stat.changeType === 'increase' && <ArrowUpRight size={14} className="text-green-600" />}
-                {stat.changeType === 'decrease' && <ArrowDownRight size={14} className="text-red-600" />}
-                <p className={`text-xs ${stat.changeType === 'increase' ? 'text-green-600' :
-                  stat.changeType === 'decrease' ? 'text-red-600' : 'text-gray-500'
-                  }`}>
-                  {stat.change}
-                </p>
-              </div>
             </div>
           ))}
         </div>
@@ -312,7 +301,7 @@ function PatientLayout() {
           {/* Left Column - Appointments & Activities */}
           <div className="lg:col-span-2 space-y-6">
             {/* Upcoming Appointments */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-5 sm:p-6 border-b border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
@@ -366,7 +355,7 @@ function PatientLayout() {
             </div>
 
             {/* Recent Activities */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-5 sm:p-6 border-b border-gray-100">
                 <h3 className="text-lg font-semibold text-gray-900">Recent Activities</h3>
                 <p className="text-sm text-gray-500 mt-1">Your latest health updates</p>
@@ -393,7 +382,7 @@ function PatientLayout() {
           {/* Right Column - Prescriptions & Health Metrics */}
           <div className="space-y-6">
             {/* Active Prescriptions */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-5 sm:p-6 border-b border-gray-100">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900">Active Prescriptions</h3>
@@ -427,7 +416,7 @@ function PatientLayout() {
             </div>
 
             {/* Health Metrics */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-5 sm:p-6 border-b border-gray-100">
                 <h3 className="text-lg font-semibold text-gray-900">Health Metrics</h3>
                 <p className="text-sm text-gray-500 mt-1">Latest vital signs</p>
@@ -454,7 +443,7 @@ function PatientLayout() {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-5 sm:p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
                 <div className="space-y-2">
