@@ -1,7 +1,7 @@
 import { dbConnect } from '@/server/db.server';
 import { PatientModel } from '@/server/models/patient';
 import { useAppSession } from '@/server/session';
-import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
+import { createFileRoute, Link, Outlet, redirect, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start';
 import { Activity, CalendarDays, ClipboardList, Home, LogOut, MessageSquare, Pill, Receipt, Settings, User, X } from 'lucide-react';
 import { useState } from 'react';
@@ -45,7 +45,7 @@ export const Route = createFileRoute('/patient')({
 function PatientLayout() {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [activeNav, setActiveNav] = useState('dashboard')
+    const location = useLocation();
 
     const navigationItems = [
         { id: 'dashboard', path: "/patient", label: 'Dashboard', icon: Home },
@@ -75,7 +75,7 @@ function PatientLayout() {
                 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
                 `}>
                 {/* Sidebar Header */}
-                <div className="p-6 border-b border-gray-200">
+                <div className="px-6 py-4 border-b border-gray-200">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                             <div className="w-10 h-10 bg-[#346ED6] rounded-lg flex items-center justify-center">
@@ -99,13 +99,12 @@ function PatientLayout() {
                 <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
                     {navigationItems.map((item) => {
                         const Icon = item.icon
-                        const isActive = activeNav === item.id
+                        const isActive = location.pathname === item.path
                         return (
                             <Link
                                 to={item.path}
                                 key={item.id}
                                 onClick={() => {
-                                    setActiveNav(item.id)
                                     setSidebarOpen(false)
                                 }}
                                 className={`
@@ -118,9 +117,9 @@ function PatientLayout() {
                             >
                                 <Icon size={20} />
                                 <span className="text-sm font-medium">{item.label}</span>
-                                {item.id === 'appointments' && (
+                                {/* {item.id === 'appointments' && (
                                     <span className="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-0.5">2</span>
-                                )}
+                                )} */}
                             </Link>
                         )
                     })}
