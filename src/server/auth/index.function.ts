@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start"
 import { useAppSession } from "../session"
-import { User } from "../models/user"
 import { dbConnect } from "../db.server"
+import { UserModel } from "../models/user"
 
 // Get current user
 export const getCurrentUserFn = createServerFn({ method: 'GET' }).handler(
@@ -19,7 +19,7 @@ export const getCurrentUserFn = createServerFn({ method: 'GET' }).handler(
 
 const getUserById = async (userId: string) => {
   await dbConnect();
-  const user = await User.findById(userId);
+  const user = await UserModel.findById(userId);
   const payload = user;
   payload.password = undefined;
   return payload;
