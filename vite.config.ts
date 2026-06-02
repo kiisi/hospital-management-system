@@ -6,21 +6,21 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
-// import { nitro } from 'nitro/vite'
-import netlify from '@netlify/vite-plugin-tanstack-start'
+import { nitro } from 'nitro/vite'
+// import netlify from '@netlify/vite-plugin-tanstack-start'
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     devtools(),
-    // nitro({ 
-    //   rollupConfig: { external: [/^@sentry\//] }
-    //  }),
+    nitro({ 
+      rollupConfig: { external: [/^@sentry\//] }
+     }),
     tailwindcss(),
     tanstackStart(),
     viteReact(),
     babel({ presets: [reactCompilerPreset()] }),
-    netlify(),
+    // netlify(),
   ],
 })
 
