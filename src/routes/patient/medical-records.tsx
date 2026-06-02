@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import { 
-  Calendar, 
+import {
+  Calendar,
   Clock,
   Bell,
   User,
@@ -63,7 +63,7 @@ function RouteComponent() {
   const [showRecordModal, setShowRecordModal] = useState(false)
   const [expandedSection, setExpandedSection] = useState(null)
 
-    const patientInfo = {
+  const patientInfo = {
     name: "Sarah Johnson",
     id: "P-2024-0892",
     email: "sarah.johnson@email.com",
@@ -189,7 +189,7 @@ function RouteComponent() {
   ]
 
   const getStatusColor = (status: string) => {
-    switch(status) {
+    switch (status) {
       case 'normal': return 'bg-green-50 text-green-700 border-green-200'
       case 'abnormal': return 'bg-yellow-50 text-yellow-700 border-yellow-200'
       case 'critical': return 'bg-red-50 text-red-700 border-red-200'
@@ -201,7 +201,7 @@ function RouteComponent() {
   }
 
   const getSeverityColor = (severity: string) => {
-    switch(severity) {
+    switch (severity) {
       case 'normal': return 'bg-green-100 text-green-800'
       case 'mild': return 'bg-blue-100 text-blue-800'
       case 'moderate': return 'bg-orange-100 text-orange-800'
@@ -211,7 +211,7 @@ function RouteComponent() {
   }
 
   const getTrendIcon = (trend: string) => {
-    switch(trend) {
+    switch (trend) {
       case 'up': return <TrendingUp size={16} className="text-red-500" />
       case 'down': return <TrendingDown size={16} className="text-green-500" />
       default: return <Minus size={16} className="text-gray-400" />
@@ -219,7 +219,7 @@ function RouteComponent() {
   }
 
   const VitalSignCard = ({ icon: Icon, label, value, unit, status, trend, date, color }) => (
-    <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-xl border border-gray-200 p-4">
       <div className="flex items-start justify-between mb-3">
         <div className={`p-2 rounded-lg ${color}`}>
           <Icon size={18} className="text-white" />
@@ -299,65 +299,34 @@ function RouteComponent() {
 
         {/* Page Content */}
         <main className="p-4 sm:p-6 lg:p-8">
-          {/* Page Header */}
-          <div className="mb-6 sm:mb-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">Medical Records</h2>
-                <p className="text-sm text-gray-500 mt-1">View your complete medical history and health records</p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
-                  <Printer size={16} />
-                  <span className="hidden sm:inline">Print Summary</span>
-                </button>
-                <button className="flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 text-sm">
-                  <Download size={16} />
-                  <span className="hidden sm:inline">Download All</span>
-                </button>
-              </div>
+          <div className="mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Medical Records</h2>
+              <p className="text-sm text-gray-500 mt-1">View your complete medical history and health records</p>
             </div>
           </div>
 
           {/* Patient Info Banner */}
-          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-6 text-white shadow-lg shadow-blue-200 mb-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                  <User size={32} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">{patientInfo.name}</h3>
-                  <p className="text-blue-100">Patient ID: {patientInfo.id}</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm">
-                      Blood Group: {patientInfo.bloodGroup}
-                    </span>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm">
-                      Age: {patientInfo.age}
-                    </span>
-                  </div>
-                </div>
+          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-5 text-white mb-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm flex-shrink-0">
+                <User size={24} className="text-white" />
               </div>
-              <div className="flex flex-wrap gap-2">
-                {patientInfo.allergies.map((allergy, idx) => (
-                  <span key={idx} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-400/30 backdrop-blur-sm border border-red-300/50">
-                    <AlertCircle size={12} className="mr-1" />
-                    Allergy: {allergy}
-                  </span>
-                ))}
-                {patientInfo.chronicConditions.map((condition, idx) => (
-                  <span key={idx} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-400/30 backdrop-blur-sm border border-yellow-300/50">
-                    <Shield size={12} className="mr-1" />
-                    {condition}
-                  </span>
-                ))}
+              <div>
+                <h3 className="text-lg font-semibold">{patientInfo.name}</h3>
+                <div className="flex items-center gap-2 mt-1 text-sm text-blue-100">
+                  <span>ID: {patientInfo.id}</span>
+                  <span className="text-blue-300">•</span>
+                  <span>{patientInfo.bloodGroup}</span>
+                  <span className="text-blue-300">•</span>
+                  <span>{patientInfo.age} years</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Tab Navigation */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
+          <div className="bg-white rounded-xl border border-gray-100 mb-6">
             <div className="border-b border-gray-200">
               <nav className="flex overflow-x-auto">
                 {[
@@ -389,7 +358,7 @@ function RouteComponent() {
           {activeTab === 'summary' && (
             <div className="space-y-6">
               {/* Vital Signs Overview */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="bg-white rounded-xl border border-gray-100">
                 <div className="p-6 border-b border-gray-100">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold text-gray-900">Current Vital Signs</h3>
@@ -400,7 +369,7 @@ function RouteComponent() {
                 </div>
                 <div className="p-6">
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={HeartPulse}
                       label="Blood Pressure"
                       value={`${vitalsHistory.current.bloodPressure.systolic}/${vitalsHistory.current.bloodPressure.diastolic}`}
@@ -410,7 +379,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-red-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Heart}
                       label="Heart Rate"
                       value={vitalsHistory.current.heartRate.value}
@@ -420,7 +389,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-pink-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Thermometer}
                       label="Temperature"
                       value={vitalsHistory.current.temperature.value}
@@ -430,7 +399,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-orange-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Weight}
                       label="Oxygen Saturation"
                       value={vitalsHistory.current.oxygenSaturation.value}
@@ -440,7 +409,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-cyan-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Weight}
                       label="Weight"
                       value={vitalsHistory.current.weight.value}
@@ -450,7 +419,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-indigo-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Ruler}
                       label="Height"
                       value={vitalsHistory.current.height.value}
@@ -467,7 +436,7 @@ function RouteComponent() {
               {/* Recent Records & Lab Results */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Medical Records */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="bg-white rounded-xl border border-gray-100">
                   <div className="p-6 border-b border-gray-100">
                     <h3 className="text-lg font-semibold text-gray-900">Recent Medical Records</h3>
                   </div>
@@ -502,7 +471,7 @@ function RouteComponent() {
                 </div>
 
                 {/* Recent Lab Results */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="bg-white rounded-xl border border-gray-100">
                   <div className="p-6 border-b border-gray-100">
                     <h3 className="text-lg font-semibold text-gray-900">Lab Results Summary</h3>
                   </div>
@@ -519,11 +488,10 @@ function RouteComponent() {
                               <p className="text-xs text-gray-500">{lab.count} tests • Last: {lab.lastTest}</p>
                             </div>
                           </div>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            lab.status === 'up-to-date' 
-                              ? 'bg-green-100 text-green-700'
-                              : 'bg-yellow-100 text-yellow-700'
-                          }`}>
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${lab.status === 'up-to-date'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-yellow-100 text-yellow-700'
+                            }`}>
                             {lab.status === 'up-to-date' ? (
                               <CheckCircle2 size={12} className="mr-1" />
                             ) : (
@@ -541,7 +509,7 @@ function RouteComponent() {
           )}
 
           {activeTab === 'vitals' && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-6 border-b border-gray-100">
                 <h3 className="text-lg font-semibold text-gray-900">Vital Signs History</h3>
                 <p className="text-sm text-gray-500 mt-1">Track your vital signs over time</p>
@@ -572,7 +540,7 @@ function RouteComponent() {
                             </div>
                           </div>
                           <div className="w-32 bg-gray-200 rounded-full h-2">
-                            <div 
+                            <div
                               className="bg-blue-500 h-2 rounded-full"
                               style={{ width: `${(reading.systolic / 140) * 100}%` }}
                             ></div>
@@ -584,7 +552,7 @@ function RouteComponent() {
 
                   {/* Other Vitals Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Heart}
                       label="Heart Rate"
                       value={vitalsHistory.current.heartRate.value}
@@ -594,7 +562,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-pink-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Thermometer}
                       label="Temperature"
                       value={vitalsHistory.current.temperature.value}
@@ -604,7 +572,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-orange-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Weight}
                       label="Respiratory Rate"
                       value={vitalsHistory.current.respiratoryRate.value}
@@ -614,7 +582,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-cyan-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={HeartPulse}
                       label="Oxygen Saturation"
                       value={vitalsHistory.current.oxygenSaturation.value}
@@ -624,7 +592,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-emerald-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Weight}
                       label="Weight"
                       value={vitalsHistory.current.weight.value}
@@ -634,7 +602,7 @@ function RouteComponent() {
                       date="Dec 28"
                       color="bg-indigo-500"
                     />
-                    <VitalSignCard 
+                    <VitalSignCard
                       icon={Ruler}
                       label="Height"
                       value={vitalsHistory.current.height.value}
@@ -653,7 +621,7 @@ function RouteComponent() {
           {activeTab === 'records' && (
             <div className="space-y-4">
               {/* Filters */}
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+              <div className="bg-white rounded-xl border border-gray-100 p-4">
                 <div className="flex flex-col sm:flex-row gap-3">
                   <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
                     <option>All Departments</option>
@@ -679,7 +647,7 @@ function RouteComponent() {
 
               {/* Records List */}
               {medicalRecords.map((record) => (
-                <div key={record.id} className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                <div key={record.id} className="bg-white rounded-xl border border-gray-100">
                   <div className="p-6">
                     <div className="flex flex-col lg:flex-row gap-4">
                       <div className="flex-1">
@@ -696,9 +664,9 @@ function RouteComponent() {
                             {record.severity}
                           </span>
                         </div>
-                        
+
                         <p className="text-sm text-gray-600 mb-4">{record.summary}</p>
-                        
+
                         <div className="flex flex-wrap gap-3 text-xs text-gray-500">
                           <span className="flex items-center space-x-1">
                             <Calendar size={14} />
@@ -726,9 +694,8 @@ function RouteComponent() {
                             {record.labResults.map((lab, idx) => (
                               <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                                 <p className="text-xs text-gray-600">{lab.test}</p>
-                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                                  lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                                }`}>
+                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                  }`}>
                                   {lab.result}
                                 </span>
                               </div>
@@ -738,7 +705,7 @@ function RouteComponent() {
                       </div>
 
                       <div className="lg:w-48 flex lg:flex-col gap-2">
-                        <button 
+                        <button
                           onClick={() => handleViewRecord(record)}
                           className="flex-1 px-4 py-2 border border-[#346ED6] text-[#346ED6] rounded-lg text-sm font-medium hover:bg-[#346ED6]/5 transition-colors"
                         >
@@ -758,7 +725,7 @@ function RouteComponent() {
           )}
 
           {activeTab === 'labs' && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-6 border-b border-gray-100">
                 <h3 className="text-lg font-semibold text-gray-900">Laboratory Results</h3>
                 <p className="text-sm text-gray-500 mt-1">Complete lab test history</p>
@@ -791,9 +758,8 @@ function RouteComponent() {
                                 <td className="py-3 text-sm font-medium text-gray-900">{lab.result}</td>
                                 <td className="py-3 text-sm text-gray-500">{lab.range}</td>
                                 <td className="py-3">
-                                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                                    lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                                  }`}>
+                                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                    }`}>
                                     {lab.status === 'normal' ? (
                                       <CheckCircle2 size={12} className="mr-1" />
                                     ) : (
@@ -815,7 +781,7 @@ function RouteComponent() {
           )}
 
           {activeTab === 'documents' && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl border border-gray-100">
               <div className="p-6 border-b border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
@@ -846,7 +812,7 @@ function RouteComponent() {
                               </div>
                             </div>
                             <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <button 
+                              <button
                                 onClick={() => handleDownload(doc)}
                                 className="p-1.5 text-gray-400 hover:text-[#346ED6] hover:bg-white rounded-lg"
                               >
@@ -874,14 +840,14 @@ function RouteComponent() {
           <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
               <h2 className="text-lg font-semibold text-gray-900">Medical Record Details</h2>
-              <button 
+              <button
                 onClick={() => setShowRecordModal(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg"
               >
                 <X size={20} className="text-gray-600" />
               </button>
             </div>
-            
+
             <div className="p-6 space-y-6">
               {/* Header Info */}
               <div className="flex items-start justify-between">
