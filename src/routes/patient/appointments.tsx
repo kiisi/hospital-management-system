@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { AlertCircle, ArrowLeft, Bell, Calendar, CheckCircle, Clock4, MapPin, Menu, MoreVertical, Phone, Plus, Search, SlidersHorizontal, Star, User, Video, X, XCircle } from 'lucide-react'
+import { AlertCircle, ArrowLeft, Bell, Calendar, CalendarDays, CheckCircle, CheckCircle2, Clock, Clock4, MapPin, Menu, MoreVertical, Phone, Plus, Search, SlidersHorizontal, Star, User, Video, X, XCircle } from 'lucide-react'
 import { useState } from 'react'
 
 export const Route = createFileRoute('/patient/appointments')({
@@ -7,7 +7,7 @@ export const Route = createFileRoute('/patient/appointments')({
 })
 
 function RouteComponent() {
-   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activeNav, setActiveNav] = useState('appointments')
   const [viewMode, setViewMode] = useState('upcoming') // upcoming, past, calendar
   const [showBookModal, setShowBookModal] = useState(false)
@@ -21,46 +21,30 @@ function RouteComponent() {
       doctor: {
         name: "Dr. Michael Chen",
         specialty: "Cardiologist",
-        avatar: "https://ui-avatars.com/api/?name=Michael+Chen&background=346ED6&color=fff",
-        rating: 4.8,
-        reviews: 124
+        avatar: "https://ui-avatars.com/api/?name=Michael+Chen&background=346ED6&color=fff"
       },
-      date: "2025-01-15",
-      day: "Wednesday",
+      date: "Jan 15, 2025",
       time: "10:30 AM",
-      duration: "30 min",
       type: "In-person",
       status: "confirmed",
-      location: "Room 302, Building A",
-      address: "123 Medical Center Drive",
-      notes: "Follow-up on cardiac evaluation. Please bring previous ECG reports.",
-      meetingLink: null,
+      location: "Room 302",
       canReschedule: true,
-      canCancel: true,
-      reminders: true
+      canCancel: true
     },
     {
       id: 2,
       doctor: {
         name: "Dr. Emily Williams",
         specialty: "Dermatologist",
-        avatar: "https://ui-avatars.com/api/?name=Emily+Williams&background=10B981&color=fff",
-        rating: 4.9,
-        reviews: 89
+        avatar: "https://ui-avatars.com/api/?name=Emily+Williams&background=10B981&color=fff"
       },
-      date: "2025-01-20",
-      day: "Monday",
+      date: "Jan 20, 2025",
       time: "2:00 PM",
-      duration: "45 min",
       type: "Video Consultation",
       status: "pending",
-      location: "Virtual Meeting",
-      address: null,
-      notes: "Skin condition assessment. Upload photos before appointment.",
-      meetingLink: "https://meet.medicare.com/abc123",
+      location: "Virtual",
       canReschedule: true,
-      canCancel: true,
-      reminders: false
+      canCancel: true
     }
   ]
 
@@ -70,22 +54,13 @@ function RouteComponent() {
       doctor: {
         name: "Dr. Robert Brown",
         specialty: "General Physician",
-        avatar: "https://ui-avatars.com/api/?name=Robert+Brown&background=F59E0B&color=fff",
-        rating: 4.7,
-        reviews: 256
+        avatar: "https://ui-avatars.com/api/?name=Robert+Brown&background=F59E0B&color=fff"
       },
-      date: "2025-01-10",
-      day: "Friday",
+      date: "Jan 10, 2025",
       time: "9:00 AM",
-      duration: "30 min",
       type: "In-person",
       status: "completed",
-      location: "Room 105, Building B",
-      address: "123 Medical Center Drive",
-      notes: "Annual checkup completed. Blood work ordered.",
-      diagnosis: "General health examination - Normal",
-      prescription: "Vitamin D supplements prescribed",
-      followUp: "6 months",
+      location: "Room 105",
       canReschedule: false,
       canCancel: false
     },
@@ -94,20 +69,13 @@ function RouteComponent() {
       doctor: {
         name: "Dr. Lisa Anderson",
         specialty: "Orthopedist",
-        avatar: "https://ui-avatars.com/api/?name=Lisa+Anderson&background=8B5CF6&color=fff",
-        rating: 4.6,
-        reviews: 178
+        avatar: "https://ui-avatars.com/api/?name=Lisa+Anderson&background=8B5CF6&color=fff"
       },
-      date: "2025-01-05",
-      day: "Sunday",
+      date: "Jan 5, 2025",
       time: "11:30 AM",
-      duration: "45 min",
       type: "In-person",
       status: "cancelled",
-      location: "Room 210, Building A",
-      address: "123 Medical Center Drive",
-      notes: "Knee pain consultation - Cancelled by patient",
-      cancellationReason: "Schedule conflict",
+      location: "Room 210",
       canReschedule: true,
       canCancel: false
     }
@@ -121,7 +89,7 @@ function RouteComponent() {
   }
 
   const getStatusColor = (status: string) => {
-    switch(status) {
+    switch (status) {
       case 'confirmed': return 'bg-green-50 text-green-700 border-green-200'
       case 'pending': return 'bg-yellow-50 text-yellow-700 border-yellow-200'
       case 'completed': return 'bg-blue-50 text-blue-700 border-blue-200'
@@ -131,7 +99,7 @@ function RouteComponent() {
   }
 
   const getStatusIcon = (status: string) => {
-    switch(status) {
+    switch (status) {
       case 'confirmed': return <CheckCircle size={16} className="text-green-600" />
       case 'pending': return <Clock4 size={16} className="text-yellow-600" />
       case 'completed': return <CheckCircle size={16} className="text-blue-600" />
@@ -209,7 +177,7 @@ function RouteComponent() {
                 </button>
 
                 {/* Book New Button */}
-                <button 
+                <button
                   onClick={() => setShowBookModal(true)}
                   className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                 >
@@ -237,7 +205,7 @@ function RouteComponent() {
                 <h2 className="text-2xl font-bold text-gray-900">My Appointments</h2>
                 <p className="text-sm text-gray-500 mt-1">Manage and track your medical appointments</p>
               </div>
-              <button 
+              <button
                 onClick={() => setShowBookModal(true)}
                 className="sm:hidden w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
               >
@@ -250,21 +218,55 @@ function RouteComponent() {
           {/* Appointment Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
             {[
-              { label: 'Total Appointments', value: appointmentStats.total, color: 'bg-[#346ED6]', textColor: 'text-white' },
-              { label: 'Upcoming', value: appointmentStats.upcoming, color: 'bg-green-500', textColor: 'text-white' },
-              { label: 'Completed', value: appointmentStats.completed, color: 'bg-blue-500', textColor: 'text-white' },
-              { label: 'Cancelled', value: appointmentStats.cancelled, color: 'bg-red-500', textColor: 'text-white' }
+              {
+                label: 'Total Appointments',
+                value: appointmentStats.total,
+                icon: CalendarDays,
+                bgColor: 'bg-[#346ED6]/5',
+                iconColor: 'text-[#346ED6]',
+                borderColor: 'border-[#346ED6]/20'
+              },
+              {
+                label: 'Upcoming',
+                value: appointmentStats.upcoming,
+                icon: Clock,
+                bgColor: 'bg-emerald-50',
+                iconColor: 'text-emerald-600',
+                borderColor: 'border-emerald-200'
+              },
+              {
+                label: 'Completed',
+                value: appointmentStats.completed,
+                icon: CheckCircle2,
+                bgColor: 'bg-blue-50',
+                iconColor: 'text-blue-600',
+                borderColor: 'border-blue-200'
+              },
+              {
+                label: 'Cancelled',
+                value: appointmentStats.cancelled,
+                icon: XCircle,
+                bgColor: 'bg-rose-50',
+                iconColor: 'text-rose-400',
+                borderColor: 'border-rose-200'
+              }
             ].map((stat, index) => (
-              <div key={index} className={`${stat.color} rounded-xl p-4 ${stat.textColor}`}>
-                <p className="text-3xl font-bold">{stat.value}</p>
-                <p className="text-sm opacity-90 mt-1">{stat.label}</p>
+              <div
+                key={index}
+                className={`${stat.bgColor} border ${stat.borderColor} rounded-xl p-4`}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
+                  <stat.icon size={20} className={stat.iconColor} />
+                </div>
+                <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
               </div>
             ))}
           </div>
 
           {/* View Toggle & Filters */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
-            <div className="p-4 sm:p-6">
+          <div className="bg-white rounded-xl border border-gray-100 mb-6">
+            <div className="p-4">
               <div className="flex flex-col sm:flex-row gap-4">
                 {/* View Toggle */}
                 <div className="flex bg-gray-100 rounded-lg p-1">
@@ -276,11 +278,10 @@ function RouteComponent() {
                     <button
                       key={tab.id}
                       onClick={() => setViewMode(tab.id)}
-                      className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                        viewMode === tab.id
-                          ? 'bg-white text-[#346ED6] shadow-sm'
-                          : 'text-gray-600 hover:text-gray-900'
-                      }`}
+                      className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all ${viewMode === tab.id
+                        ? 'bg-white text-[#346ED6]'
+                        : 'text-gray-600 hover:text-gray-900'
+                        }`}
                     >
                       {tab.label}
                     </button>
@@ -289,7 +290,7 @@ function RouteComponent() {
 
                 {/* Filters */}
                 <div className="flex-1 flex items-center justify-end space-x-2">
-                  <button 
+                  <button
                     onClick={() => setShowFilters(!showFilters)}
                     className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50"
                   >
@@ -353,168 +354,90 @@ function RouteComponent() {
           </div>
 
           {/* Appointments List */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             {(viewMode === 'upcoming' ? upcomingAppointments : pastAppointments).map((appointment) => (
-              <div key={appointment.id} className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="p-5 sm:p-6">
-                  <div className="flex flex-col lg:flex-row gap-6">
-                    {/* Doctor Info */}
-                    <div className="flex items-start space-x-4 flex-1">
-                      <div className="relative">
-                        <img 
-                          src={appointment.doctor.avatar} 
-                          alt={appointment.doctor.name}
-                          className="w-14 h-14 rounded-full"
-                        />
-                        {appointment.type.includes('Video') && (
-                          <div className="absolute -bottom-1 -right-1 bg-purple-500 rounded-full p-1">
-                            <Video size={12} className="text-white" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900">{appointment.doctor.name}</h3>
-                            <p className="text-sm text-gray-500">{appointment.doctor.specialty}</p>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <Star size={14} className="text-yellow-400 fill-current" />
-                              <span className="text-sm font-medium text-gray-700">{appointment.doctor.rating}</span>
-                              <span className="text-xs text-gray-400">({appointment.doctor.reviews} reviews)</span>
-                            </div>
-                          </div>
-                          {appointment.status !== 'completed' && appointment.status !== 'cancelled' && (
-                            <button className="text-gray-400 hover:text-gray-600">
-                              <MoreVertical size={20} />
-                            </button>
-                          )}
+              <div key={appointment.id} className="border border-gray-100 hover:border-[#346ED6]/30 bg-white rounded-xl">
+                <div className="p-4">
+                  {/* Mobile & Desktop Layout */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    {/* Doctor Info & Appointment Details */}
+                    <div className="flex items-center space-x-3 flex-1 min-w-0">
+                      <img
+                        src={appointment.doctor.avatar}
+                        alt={appointment.doctor.name}
+                        className="w-12 h-12 rounded-full flex-shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-sm font-semibold text-gray-900 truncate">{appointment.doctor.name}</h3>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${appointment.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700' :
+                            appointment.status === 'pending' ? 'bg-amber-50 text-amber-700' :
+                              appointment.status === 'completed' ? 'bg-blue-50 text-blue-700' :
+                                'bg-gray-50 text-gray-600'
+                            }`}>
+                            {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                          </span>
                         </div>
+                        <p className="text-xs text-gray-500 mt-0.5">{appointment.doctor.specialty}</p>
 
-                        {/* Appointment Details */}
-                        <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
-                          <div>
-                            <p className="text-xs text-gray-500">Date</p>
-                            <p className="text-sm font-medium text-gray-900">{appointment.date}</p>
-                            <p className="text-xs text-gray-400">{appointment.day}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500">Time</p>
-                            <p className="text-sm font-medium text-gray-900">{appointment.time}</p>
-                            <p className="text-xs text-gray-400">{appointment.duration}</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500">Type</p>
-                            <span className={`inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-xs font-medium border ${getTypeColor(appointment.type)}`}>
-                              {getTypeIcon(appointment.type)}
-                              <span>{appointment.type}</span>
-                            </span>
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500">Status</p>
-                            <span className={`inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(appointment.status)}`}>
-                              {getStatusIcon(appointment.status)}
-                              <span>{appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}</span>
-                            </span>
-                          </div>
+                        {/* Date/Time Row - Stacks on mobile */}
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-gray-500">
+                          <span className="flex items-center space-x-1 whitespace-nowrap">
+                            <Calendar size={12} />
+                            <span>{appointment.date}</span>
+                          </span>
+                          <span className="flex items-center space-x-1 whitespace-nowrap">
+                            <Clock size={12} />
+                            <span>{appointment.time}</span>
+                          </span>
+                          <span className="flex items-center space-x-1 whitespace-nowrap">
+                            {appointment.type.includes('Video') ? <Video size={12} /> : <MapPin size={12} />}
+                            <span className="truncate">{appointment.type.includes('Video') ? 'Virtual' : appointment.location}</span>
+                          </span>
                         </div>
-
-                        {/* Location */}
-                        <div className="mt-3 flex items-center space-x-2 text-sm text-gray-600">
-                          <MapPin size={14} className="text-gray-400" />
-                          <span>{appointment.location}</span>
-                          {appointment.address && <span className="text-gray-400">• {appointment.address}</span>}
-                        </div>
-
-                        {/* Notes */}
-                        {appointment.notes && (
-                          <div className="mt-3 bg-gray-50 rounded-lg p-3">
-                            <p className="text-sm text-gray-600">
-                              <span className="font-medium">Notes:</span> {appointment.notes}
-                            </p>
-                          </div>
-                        )}
-
-                        {/* Past Appointment Details */}
-                        {appointment.status === 'completed' && (
-                          <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            {appointment.diagnosis && (
-                              <div className="bg-blue-50 rounded-lg p-3">
-                                <p className="text-xs text-blue-600 font-medium">Diagnosis</p>
-                                <p className="text-sm text-gray-900 mt-1">{appointment.diagnosis}</p>
-                              </div>
-                            )}
-                            {appointment.prescription && (
-                              <div className="bg-green-50 rounded-lg p-3">
-                                <p className="text-xs text-green-600 font-medium">Prescription</p>
-                                <p className="text-sm text-gray-900 mt-1">{appointment.prescription}</p>
-                              </div>
-                            )}
-                            {appointment.followUp && (
-                              <div className="bg-purple-50 rounded-lg p-3">
-                                <p className="text-xs text-purple-600 font-medium">Follow-up</p>
-                                <p className="text-sm text-gray-900 mt-1">{appointment.followUp}</p>
-                              </div>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Cancellation Reason */}
-                        {appointment.status === 'cancelled' && appointment.cancellationReason && (
-                          <div className="mt-3 bg-red-50 rounded-lg p-3 border border-red-100">
-                            <div className="flex items-start space-x-2">
-                              <AlertCircle size={16} className="text-red-500 flex-shrink-0 mt-0.5" />
-                              <div>
-                                <p className="text-sm font-medium text-red-700">Cancellation Reason</p>
-                                <p className="text-sm text-red-600">{appointment.cancellationReason}</p>
-                              </div>
-                            </div>
-                          </div>
-                        )}
                       </div>
                     </div>
 
-                    {/* Actions */}
-                    <div className="lg:w-48 flex lg:flex-col justify-end gap-2">
-                      <button 
-                        onClick={() => handleViewDetails(appointment)}
-                        className="flex-1 lg:flex-none px-4 py-2 border border-[#346ED6] text-[#346ED6] rounded-lg text-sm font-medium hover:bg-[#346ED6]/5 transition-colors"
-                      >
-                        View Details
-                      </button>
-                      
-                      {appointment.status === 'confirmed' && appointment.canReschedule && (
-                        <button 
-                          onClick={() => handleReschedule(appointment)}
-                          className="flex-1 lg:flex-none px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
-                        >
-                          Reschedule
-                        </button>
+                    {/* Actions - Horizontal on mobile, unchanged on desktop */}
+                    <div className="flex items-center gap-2 sm:ml-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+                      {appointment.status === 'confirmed' && (
+                        <>
+                          <button
+                            onClick={() => handleReschedule(appointment)}
+                            className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors whitespace-nowrap"
+                          >
+                            Reschedule
+                          </button>
+                          <button
+                            onClick={() => handleCancel(appointment)}
+                            className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors whitespace-nowrap"
+                          >
+                            Cancel
+                          </button>
+                        </>
                       )}
-                      
-                      {appointment.canCancel && appointment.status !== 'cancelled' && (
-                        <button 
+                      {appointment.status === 'pending' && (
+                        <button
                           onClick={() => handleCancel(appointment)}
-                          className="flex-1 lg:flex-none px-4 py-2 border border-red-300 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors"
+                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors whitespace-nowrap"
                         >
                           Cancel
                         </button>
                       )}
-                      
-                      {appointment.status === 'cancelled' && appointment.canReschedule && (
-                        <button 
+                      {appointment.status === 'completed' && (
+                        <button
                           onClick={() => handleRebook(appointment)}
-                          className="flex-1 lg:flex-none px-4 py-2 bg-[#346ED6] text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
                         >
-                          Rebook
+                          Book Again
                         </button>
                       )}
-                      
-                      {appointment.status === 'completed' && (
-                        <button 
+                      {appointment.status === 'cancelled' && appointment.canReschedule && (
+                        <button
                           onClick={() => handleRebook(appointment)}
-                          className="flex-1 lg:flex-none px-4 py-2 bg-[#346ED6] text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
                         >
-                          Book Follow-up
+                          Rebook
                         </button>
                       )}
                     </div>
@@ -523,26 +446,27 @@ function RouteComponent() {
               </div>
             ))}
           </div>
-
           {/* Empty State */}
           {(viewMode === 'upcoming' ? upcomingAppointments : pastAppointments).length === 0 && (
-            <div className="text-center py-16">
-              <Calendar className="mx-auto h-16 w-16 text-gray-300" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900">No appointments found</h3>
-              <p className="mt-2 text-sm text-gray-500">
-                {viewMode === 'upcoming' 
-                  ? "You don't have any upcoming appointments scheduled."
-                  : "No past appointments found."}
-              </p>
-              <div className="mt-6">
-                <button 
-                  onClick={() => setShowBookModal(true)}
-                  className="inline-flex items-center px-6 py-3 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-                >
-                  <Plus className="mr-2 h-5 w-5" />
-                  Book New Appointment
-                </button>
+            <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
+              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calendar className="h-8 w-8 text-gray-300" />
               </div>
+              <h3 className="text-sm font-medium text-gray-900">No appointments found</h3>
+              <p className="text-xs text-gray-500 mt-1">
+                {viewMode === 'upcoming'
+                  ? "You don't have any upcoming appointments"
+                  : "No past appointments found"}
+              </p>
+              {viewMode === 'upcoming' && (
+                <button
+                  onClick={() => setShowBookModal(true)}
+                  className="mt-4 inline-flex items-center px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                >
+                  <Plus size={16} className="mr-1.5" />
+                  Book Appointment
+                </button>
+              )}
             </div>
           )}
         </main>
@@ -554,7 +478,7 @@ function RouteComponent() {
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
               <div className="flex items-center space-x-3">
-                <button 
+                <button
                   onClick={() => setShowDetailModal(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg"
                 >
@@ -562,19 +486,19 @@ function RouteComponent() {
                 </button>
                 <h2 className="text-lg font-semibold text-gray-900">Appointment Details</h2>
               </div>
-              <button 
+              <button
                 onClick={() => setShowDetailModal(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg"
               >
                 <X size={20} className="text-gray-600" />
               </button>
             </div>
-            
+
             <div className="p-6 space-y-6">
               {/* Doctor Info */}
               <div className="flex items-center space-x-4">
-                <img 
-                  src={selectedAppointment.doctor.avatar} 
+                <img
+                  src={selectedAppointment.doctor.avatar}
                   alt={selectedAppointment.doctor.name}
                   className="w-16 h-16 rounded-full"
                 />
@@ -653,7 +577,7 @@ function RouteComponent() {
                     Cancel Appointment
                   </button>
                 )}
-                <button 
+                <button
                   onClick={() => setShowDetailModal(false)}
                   className="px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 text-sm font-medium"
                 >
@@ -671,14 +595,14 @@ function RouteComponent() {
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
               <h2 className="text-lg font-semibold text-gray-900">Book New Appointment</h2>
-              <button 
+              <button
                 onClick={() => setShowBookModal(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg"
               >
                 <X size={20} className="text-gray-600" />
               </button>
             </div>
-            
+
             <div className="p-6 space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Department</label>
@@ -692,7 +616,7 @@ function RouteComponent() {
                   <option>Pediatrics</option>
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Doctor</label>
                 <select className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
@@ -703,12 +627,12 @@ function RouteComponent() {
                   <option>Dr. Lisa Anderson - Orthopedist</option>
                 </select>
               </div>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
-                  <input 
-                    type="date" 
+                  <input
+                    type="date"
                     className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
                   />
                 </div>
@@ -725,7 +649,7 @@ function RouteComponent() {
                   </select>
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Appointment Type</label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -734,7 +658,7 @@ function RouteComponent() {
                     { type: 'Video Consultation', icon: Video, description: 'Online meeting' },
                     { type: 'Phone Call', icon: Phone, description: 'Telephone consultation' }
                   ].map((item) => (
-                    <button 
+                    <button
                       key={item.type}
                       className="border-2 border-gray-200 hover:border-[#346ED6] rounded-xl p-4 text-left transition-colors group"
                     >
@@ -745,10 +669,10 @@ function RouteComponent() {
                   ))}
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Reason for Visit</label>
-                <textarea 
+                <textarea
                   rows={3}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
                   placeholder="Brief description of your symptoms or reason for visit..."
@@ -762,9 +686,9 @@ function RouteComponent() {
                 </label>
               </div>
             </div>
-            
+
             <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 flex justify-end space-x-3 rounded-b-2xl">
-              <button 
+              <button
                 onClick={() => setShowBookModal(false)}
                 className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm font-medium"
               >
