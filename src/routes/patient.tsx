@@ -52,8 +52,8 @@ function PatientLayout() {
         { id: 'appointments', path: "/patient/appointments", label: 'Appointments', icon: CalendarDays },
         { id: 'medical-records', path: "/patient/medical-records", label: 'Medical Records', icon: ClipboardList },
         { id: 'prescriptions', path: "/patient/prescriptions", label: 'Prescriptions', icon: Pill },
-        { id: 'billing', path: "/patient/billing", label: 'Billing & Payments', icon: Receipt },
-        { id: 'messages', path: "/patient/messages", label: 'Messages', icon: MessageSquare },
+        // { id: 'billing', path: "/patient/billing", label: 'Billing & Payments', icon: Receipt },
+        // { id: 'messages', path: "/patient/messages", label: 'Messages', icon: MessageSquare },
         { id: 'settings', path: "/patient/settings", label: 'Settings', icon: Settings },
     ]
 
