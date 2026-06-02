@@ -47,7 +47,7 @@ import {
   ChevronUp,
   MoreHorizontal,
   ZoomIn,
-  FileSpreadsheet
+  FileSpreadsheet,
 } from 'lucide-react'
 
 export const Route = createFileRoute('/patient/medical-records')({

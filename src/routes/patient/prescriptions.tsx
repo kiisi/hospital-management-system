@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { 
+import {
   Bell,
   User,
   Menu,
@@ -54,7 +54,7 @@ function RouteComponent() {
     email: "sarah.johnson@email.com",
     pharmacy: "MediCare Pharmacy - Downtown Branch"
   }
-   const activePrescriptions = [
+  const activePrescriptions = [
     {
       id: 'RX-2024-0892',
       medication: "Lisinopril",
@@ -176,7 +176,7 @@ function RouteComponent() {
   const prescriptionStats = {
     active: activePrescriptions.length,
     totalRefills: activePrescriptions.reduce((sum, p) => sum + p.refillsRemaining, 0),
-    monthlyCost: activePrescriptions.reduce((sum, p) => sum + p.cost, 0),
+    completed: 0,
     nextRefill: "Jan 15, 2025"
   }
 
@@ -210,7 +210,7 @@ function RouteComponent() {
           <span className="font-medium text-gray-700">{remaining} of {total} remaining</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
+          <div
             className="bg-[#346ED6] h-2 rounded-full transition-all duration-300"
             style={{ width: `${percentage}%` }}
           ></div>
@@ -278,48 +278,64 @@ function RouteComponent() {
 
         {/* Page Content */}
         <main className="p-4 sm:p-6 lg:p-8">
-          {/* Page Header */}
-          <div className="mb-6 sm:mb-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">My Prescriptions</h2>
-                <p className="text-sm text-gray-500 mt-1">Manage your medications and refill requests</p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50">
-                  <Printer size={16} />
-                  <span className="hidden sm:inline">Print All</span>
-                </button>
-                <button className="flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 text-sm">
-                  <Download size={16} />
-                  <span className="hidden sm:inline">Download List</span>
-                </button>
-              </div>
+          <div className="mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">My Prescriptions</h2>
+              <p className="text-sm text-gray-500 mt-1">Manage your medications and refill requests</p>
             </div>
           </div>
 
           {/* Prescription Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
             {[
-              { label: 'Active Prescriptions', value: prescriptionStats.active, icon: Pill, color: 'bg-[#346ED6]', iconBg: 'bg-white/20' },
-              { label: 'Refills Available', value: prescriptionStats.totalRefills, icon: RefreshCw, color: 'bg-green-500', iconBg: 'bg-white/20' },
-              { label: 'Monthly Cost', value: `$${prescriptionStats.monthlyCost}`, icon: Receipt, color: 'bg-orange-500', iconBg: 'bg-white/20' },
-              { label: 'Next Refill Due', value: prescriptionStats.nextRefill, icon: Calendar, color: 'bg-purple-500', iconBg: 'bg-white/20' }
+              {
+                label: 'Active',
+                value: prescriptionStats.active,
+                icon: Pill,
+                bgColor: 'bg-[#346ED6]/5',
+                iconColor: 'text-[#346ED6]',
+                borderColor: 'border-[#346ED6]/20'
+              },
+              {
+                label: 'Refills Available',
+                value: prescriptionStats.totalRefills,
+                icon: RefreshCw,
+                bgColor: 'bg-emerald-50',
+                iconColor: 'text-emerald-600',
+                borderColor: 'border-emerald-200'
+              },
+              {
+                label: 'Completed',
+                value: prescriptionStats.completed,
+                icon: CheckCircle2,
+                bgColor: 'bg-blue-50',
+                iconColor: 'text-blue-600',
+                borderColor: 'border-blue-200'
+              },
+              {
+                label: 'Next Refill',
+                value: prescriptionStats.nextRefill,
+                icon: Calendar,
+                bgColor: 'bg-purple-50',
+                iconColor: 'text-purple-600',
+                borderColor: 'border-purple-200'
+              }
             ].map((stat, index) => (
-              <div key={index} className={`${stat.color} rounded-xl p-4 text-white`}>
-                <div className="flex items-center justify-between mb-2">
-                  <div className={`${stat.iconBg} p-2 rounded-lg backdrop-blur-sm`}>
-                    <stat.icon size={18} />
-                  </div>
+              <div
+                key={index}
+                className={`${stat.bgColor} border ${stat.borderColor} rounded-xl p-4`}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
+                  <stat.icon size={20} className={stat.iconColor} />
                 </div>
-                <p className="text-2xl font-bold">{stat.value}</p>
-                <p className="text-xs opacity-90 mt-1">{stat.label}</p>
+                <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
               </div>
             ))}
           </div>
 
           {/* Tab Navigation */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
+          <div className="bg-white rounded-xl border border-gray-100 mb-6">
             <div className="border-b border-gray-200">
               <nav className="flex overflow-x-auto">
                 {[
@@ -349,7 +365,7 @@ function RouteComponent() {
           </div>
 
           {/* Pharmacy Info Banner */}
-          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-5 sm:p-6 text-white shadow-lg shadow-blue-200 mb-6">
+          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-5 sm:p-6 text-white  mb-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
@@ -367,123 +383,65 @@ function RouteComponent() {
           </div>
 
           {/* Prescriptions List */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             {(activeTab === 'active' ? activePrescriptions : activeTab === 'past' ? pastPrescriptions : [...activePrescriptions, ...pastPrescriptions]).map((prescription) => (
-              <div key={prescription.id} className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="p-5 sm:p-6">
-                  <div className="flex flex-col lg:flex-row gap-6">
-                    <div className="flex-1">
-                      {/* Header */}
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-start space-x-4">
-                          <div className="bg-[#346ED6]/10 p-3 rounded-xl">
-                            <Pill size={24} className="text-[#346ED6]" />
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-900">{prescription.medication}</h3>
-                            <p className="text-sm text-gray-500">{prescription.genericName} • {prescription.dosage}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          {getStatusBadge(prescription.status)}
-                          <button className="text-gray-400 hover:text-gray-600">
-                            <MoreHorizontal size={20} />
-                          </button>
-                        </div>
+              <div key={prescription.id} className="bg-white rounded-xl border border-gray-100 hover:border-[#346ED6]/30 transition-all duration-200">
+                <div className="p-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    {/* Medication Info */}
+                    <div className="flex items-center space-x-3 flex-1 min-w-0">
+                      <div className="bg-[#346ED6]/10 p-2.5 rounded-lg flex-shrink-0">
+                        <Pill size={20} className="text-[#346ED6]" />
                       </div>
-
-                      {/* Details Grid */}
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                        {[
-                          { label: 'Frequency', value: prescription.frequency },
-                          { label: 'Duration', value: prescription.duration },
-                          { label: 'Prescribed By', value: `Dr. ${prescription.prescribedBy.split(' ').slice(1).join(' ')}` },
-                          { label: 'Condition', value: prescription.condition }
-                        ].map((detail, idx) => (
-                          <div key={idx} className="bg-gray-50 rounded-lg p-3">
-                            <p className="text-xs text-gray-500">{detail.label}</p>
-                            <p className="text-sm font-medium text-gray-900 mt-1">{detail.value}</p>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Refill Progress */}
-                      {prescription.status === 'active' && prescription.refillsTotal > 0 && (
-                        <div className="mb-4">
-                          <RefillProgressBar remaining={prescription.refillsRemaining} total={prescription.refillsTotal} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-sm font-semibold text-gray-900 truncate">{prescription.medication}</h3>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${prescription.status === 'active' ? 'bg-emerald-50 text-emerald-700' :
+                              prescription.status === 'completed' ? 'bg-blue-50 text-blue-700' :
+                                'bg-gray-50 text-gray-600'
+                            }`}>
+                            {prescription.status.charAt(0).toUpperCase() + prescription.status.slice(1)}
+                          </span>
                         </div>
-                      )}
-
-                      {/* Dates & Cost */}
-                      <div className="flex flex-wrap gap-4 text-sm">
-                        <div className="flex items-center space-x-2 text-gray-500">
-                          <Calendar size={14} />
+                        <p className="text-xs text-gray-500 mt-0.5">{prescription.dosage} • {prescription.frequency}</p>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-gray-500">
+                          <span>{prescription.prescribedBy}</span>
+                          <span className="text-gray-300 hidden sm:inline">•</span>
                           <span>Started: {prescription.startDate}</span>
-                        </div>
-                        {prescription.endDate && (
-                          <div className="flex items-center space-x-2 text-gray-500">
-                            <Clock size={14} />
-                            <span>Ends: {prescription.endDate}</span>
-                          </div>
-                        )}
-                        <div className="flex items-center space-x-2 text-gray-500">
-                          <Receipt size={14} />
-                          <span>${prescription.cost}</span>
-                          {prescription.insuranceCovered ? (
-                            <span className="text-xs text-green-600 font-medium">Covered</span>
-                          ) : (
-                            <span className="text-xs text-gray-400">Not covered</span>
+                          {prescription.refillsRemaining > 0 && (
+                            <>
+                              <span className="text-gray-300 hidden sm:inline">•</span>
+                              <span className="text-emerald-600 font-medium">{prescription.refillsRemaining} refills left</span>
+                            </>
                           )}
                         </div>
                       </div>
-
-                      {/* Warnings */}
-                      {prescription.warnings && (
-                        <div className="mt-4 space-y-1">
-                          {prescription.warnings.map((warning, idx) => (
-                            <div key={idx} className="flex items-start space-x-2 text-xs">
-                              <AlertCircle size={12} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                              <span className="text-amber-700">{warning}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
                     </div>
 
                     {/* Actions */}
-                    <div className="lg:w-48 flex lg:flex-col gap-2">
-                      <button 
-                        onClick={() => handleViewDetails(prescription)}
-                        className="flex-1 px-4 py-2 border border-[#346ED6] text-[#346ED6] rounded-lg text-sm font-medium hover:bg-[#346ED6]/5 transition-colors"
-                      >
-                        <Eye size={16} className="inline mr-1" />
-                        Details
-                      </button>
+                    <div className="flex items-center gap-2 sm:ml-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
                       {prescription.status === 'active' && prescription.refillsRemaining > 0 && (
-                        <button 
+                        <button
                           onClick={() => handleRefill(prescription)}
-                          className="flex-1 px-4 py-2 bg-[#346ED6] text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
                         >
-                          <RefreshCw size={16} className="inline mr-1" />
                           Refill
                         </button>
                       )}
-                      <button className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
-                        <Printer size={16} className="inline mr-1" />
-                        Print
+                      <button
+                        onClick={() => handleViewDetails(prescription)}
+                        className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
+                      >
+                        View Details
                       </button>
                     </div>
                   </div>
 
-                  {/* Instructions */}
-                  <div className="mt-4 bg-blue-50 rounded-lg p-4 border border-blue-100">
-                    <div className="flex items-start space-x-2">
-                      <Info size={16} className="text-[#346ED6] flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium text-[#346ED6]">Instructions</p>
-                        <p className="text-sm text-gray-700 mt-1">{prescription.instructions}</p>
-                      </div>
-                    </div>
+                  {/* Instructions - Collapsible on mobile */}
+                  <div className="mt-3 bg-blue-50 rounded-lg p-3 border border-blue-100">
+                    <p className="text-xs text-gray-600">
+                      <span className="font-medium text-gray-700">Instructions:</span> {prescription.instructions}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -492,10 +450,12 @@ function RouteComponent() {
 
           {/* Empty State */}
           {(activeTab === 'active' ? activePrescriptions : activeTab === 'past' ? pastPrescriptions : [...activePrescriptions, ...pastPrescriptions]).length === 0 && (
-            <div className="text-center py-16">
-              <Pill className="mx-auto h-16 w-16 text-gray-300" />
-              <h3 className="mt-4 text-lg font-medium text-gray-900">No prescriptions found</h3>
-              <p className="mt-2 text-sm text-gray-500">You don't have any {activeTab} prescriptions.</p>
+            <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
+              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Pill className="h-8 w-8 text-gray-300" />
+              </div>
+              <h3 className="text-sm font-medium text-gray-900">No prescriptions found</h3>
+              <p className="text-xs text-gray-500 mt-1">You don't have any {activeTab} prescriptions</p>
             </div>
           )}
         </main>
@@ -511,7 +471,7 @@ function RouteComponent() {
                 <X size={20} className="text-gray-600" />
               </button>
             </div>
-            
+
             <div className="p-6 space-y-6">
               {/* Medication Header */}
               <div className="flex items-center space-x-4">
@@ -577,9 +537,9 @@ function RouteComponent() {
                 <div>
                   <h4 className="text-sm font-semibold text-gray-900 mb-2">Refill Information</h4>
                   <div className="bg-gray-50 rounded-lg p-4">
-                    <RefillProgressBar 
-                      remaining={selectedPrescription.refillsRemaining} 
-                      total={selectedPrescription.refillsTotal} 
+                    <RefillProgressBar
+                      remaining={selectedPrescription.refillsRemaining}
+                      total={selectedPrescription.refillsTotal}
                     />
                     <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
                       <div>
@@ -604,7 +564,7 @@ function RouteComponent() {
                   Print
                 </button>
                 {selectedPrescription.refillsRemaining > 0 && (
-                  <button 
+                  <button
                     onClick={() => {
                       setShowDetailModal(false)
                       handleRefill(selectedPrescription)
@@ -631,7 +591,7 @@ function RouteComponent() {
                 <X size={20} className="text-gray-600" />
               </button>
             </div>
-            
+
             <div className="p-6 space-y-6">
               {/* Medication Info */}
               <div className="bg-gray-50 rounded-xl p-4">
@@ -662,7 +622,7 @@ function RouteComponent() {
                     { method: 'Pickup', icon: Package, description: 'Pick up at pharmacy' },
                     { method: 'Delivery', icon: Truck, description: 'Deliver to your address' }
                   ].map((option) => (
-                    <button 
+                    <button
                       key={option.method}
                       className="border-2 border-gray-200 hover:border-[#346ED6] rounded-xl p-4 text-left transition-colors"
                     >
@@ -677,16 +637,16 @@ function RouteComponent() {
               {/* Notes */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Additional Notes (Optional)</label>
-                <textarea 
+                <textarea
                   rows={3}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
                   placeholder="Any special instructions for the pharmacist..."
                 />
               </div>
             </div>
-            
+
             <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 flex justify-end space-x-3 rounded-b-2xl">
-              <button 
+              <button
                 onClick={() => setShowRefillModal(false)}
                 className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm font-medium"
               >
