@@ -7,8 +7,6 @@ export const Route = createFileRoute('/patient/appointments')({
 })
 
 function RouteComponent() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeNav, setActiveNav] = useState('appointments')
   const [viewMode, setViewMode] = useState('upcoming') // upcoming, past, calendar
   const [showBookModal, setShowBookModal] = useState(false)
   const [showFilters, setShowFilters] = useState(false)

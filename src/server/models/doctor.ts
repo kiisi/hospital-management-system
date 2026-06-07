@@ -3,9 +3,13 @@ import { Schema, model } from "mongoose";
 
 export interface IDoctor {
   userId: Types.ObjectId;
+  firstName: string;
+  lastName: string;
   specialization: string;
-  email: string;
   phoneNumber: string;
+  hospitalName: string;
+  yearsOfExperience: string;
+  medicalLicenseNumber: string;
   availability: {
     day: string;
     startTime: string;
@@ -20,16 +24,22 @@ const DoctorSchema = new Schema<IDoctor>(
       ref: "User",
       required: true,
     },
-    email: {
+    firstName: {
       type: String,
       required: true,
-      unique: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
     },
     specialization: {
       type: String,
       required: true,
     },
     phoneNumber: String,
+    hospitalName: String,
+    yearsOfExperience: String,
+    medicalLicenseNumber: String,
     availability: [
       {
         day: String,
@@ -41,7 +51,7 @@ const DoctorSchema = new Schema<IDoctor>(
   { timestamps: true }
 );
 
-export const Doctor = model<IDoctor>(
+export const DoctorModel = model<IDoctor>(
   "Doctor",
   DoctorSchema
 );

@@ -3,7 +3,7 @@ import { Logo, ChevronDownIcon, MenuIcon, CloseIcon } from './Icons'
 
 const navLinks = [
     { label: 'Home', href: '/' },
-    { label: 'Services', href: '/services' },
+    { label: 'Services', href: '#services' },
     { label: 'Contact Us', href: '/contact-us' },
     { label: 'FAQs', href: '/faqs' },
 ]

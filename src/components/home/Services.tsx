@@ -39,7 +39,7 @@ const services = [
 
 export function Services() {
   return (
-    <div className="relative w-full max-w-[1440px] mx-auto px-[20px] lg:px-[64px] py-[70px] lg:py-[100px] font-sans">
+    <div className="relative w-full max-w-[1440px] mx-auto px-[20px] lg:px-[64px] py-[70px] lg:py-[100px] font-sans" id="services">
       <header className="text-center mb-[40px] max-w-[756px] mx-auto">
         <p className="text-[14px] lg:text-[18px]">Our Services</p>
         <h1 className="text-[30px] lg:text-[40px] font-bold font-mont leading-[125%] mb-2">
