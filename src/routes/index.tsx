@@ -5,6 +5,7 @@ import { AccessToCare } from '../components/home/AccessToCare'
 import { WhoBenefits } from '../components/home/WhoBenefits'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import FAQs from '@/components/home/Faqs'
 
 export const Route = createFileRoute('/')({ component: Home })
 
@@ -17,6 +18,7 @@ function Home() {
         <Services />
         <AccessToCare />
         <WhoBenefits />
+        <FAQs />
       </main>
       <div className="mt-auto">
         <Footer />
