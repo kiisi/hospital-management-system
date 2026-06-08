@@ -6,30 +6,15 @@ import {
   FileText,
   Pill,
   CreditCard,
-  Bell,
-  User,
-  Menu,
-  X,
   ChevronRight,
   Plus,
-  Activity,
   Heart,
-  Stethoscope,
   Home,
   CalendarDays,
   ClipboardList,
   Receipt,
   MessageSquare,
   Settings,
-  LogOut,
-  Search,
-  ChevronLeft,
-  TrendingUp,
-  Users,
-  DollarSign,
-  ArrowUpRight,
-  ArrowDownRight,
-  MoreHorizontal,
   AlertCircle
 } from 'lucide-react'
 
@@ -193,245 +178,240 @@ function PatientLayout() {
   const { patient } = Route.useRouteContext();
 
   return (
-    <div className="lg:pl-72">
-      
-
-      {/* Page Content */}
-      <main className="p-4 sm:p-6 lg:p-8">
-        {/* Welcome Section */}
-        <div className="mb-6 sm:mb-8 space-y-4">
-          {/* Welcome Banner */}
-          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-xl p-5 sm:p-6 text-white">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-              <div>
-                <h2 className="text-lg sm:text-xl font-bold">Welcome back, {patient.firstName}! 👋</h2>
-                <p className="mt-1 text-blue-100 text-sm">Here's your health overview for today</p>
-              </div>
-              <button className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-white/30 transition-colors border border-white/20">
-                Book Appointment
-              </button>
+    <main className="p-4 sm:p-6 lg:p-8">
+      {/* Welcome Section */}
+      <div className="mb-6 sm:mb-8 space-y-4">
+        {/* Welcome Banner */}
+        <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-xl p-5 sm:p-6 text-white">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div>
+              <h2 className="text-lg sm:text-xl font-bold">Welcome back, {patient.firstName}! 👋</h2>
+              <p className="mt-1 text-blue-100 text-sm">Here's your health overview for today</p>
             </div>
-          </div>
-
-          {/* Profile Update Warning */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0">
-                <AlertCircle size={20} className="text-amber-600" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-amber-800">Complete Your Profile</h3>
-                <p className="text-xs text-amber-600 mt-1">
-                  Your profile is incomplete. Update your emergency contact and medical history to ensure better care.
-                </p>
-              </div>
-              <button className="flex-shrink-0 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-medium hover:bg-amber-200 transition-colors">
-                Update Now
-              </button>
-            </div>
+            <button className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-white/30 transition-colors border border-white/20">
+              Book Appointment
+            </button>
           </div>
         </div>
 
-        {/* Quick Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 sm:mb-8">
-          {quickStats.map((stat, index) => (
-            <div key={index} className="bg-white rounded-xl p-5 border border-gray-100">
-              <div className="flex items-center justify-between mb-3">
-                <div className={`${stat.bgColor} p-2.5 rounded-lg`}>
-                  <stat.icon className={`h-5 w-5 ${stat.iconColor}`} />
-                </div>
-              </div>
-              <p className="text-sm text-gray-500 font-medium mb-1">{stat.title}</p>
-              <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+        {/* Profile Update Warning */}
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0">
+              <AlertCircle size={20} className="text-amber-600" />
             </div>
-          ))}
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-amber-800">Complete Your Profile</h3>
+              <p className="text-xs text-amber-600 mt-1">
+                Your profile is incomplete. Update your emergency contact and medical history to ensure better care.
+              </p>
+            </div>
+            <button className="flex-shrink-0 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-medium hover:bg-amber-200 transition-colors">
+              Update Now
+            </button>
+          </div>
         </div>
+      </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Appointments & Activities */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Upcoming Appointments */}
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-5 sm:p-6 border-b border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Upcoming Appointments</h3>
-                    <p className="text-sm text-gray-500 mt-1">Your scheduled visits</p>
-                  </div>
-                  <button className="flex items-center space-x-1 text-[#346ED6] hover:text-blue-700 text-sm font-medium">
-                    <Plus size={16} />
-                    <span className="hidden sm:inline">Book New</span>
-                  </button>
-                </div>
+      {/* Quick Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 sm:mb-8">
+        {quickStats.map((stat, index) => (
+          <div key={index} className="bg-white rounded-xl p-5 border border-gray-100">
+            <div className="flex items-center justify-between mb-3">
+              <div className={`${stat.bgColor} p-2.5 rounded-lg`}>
+                <stat.icon className={`h-5 w-5 ${stat.iconColor}`} />
               </div>
-              <div className="p-5 sm:p-6 space-y-4">
-                {upcomingAppointments.map((appointment) => (
-                  <div key={appointment.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors gap-4">
-                    <div className="flex items-start space-x-4">
-                      <img
-                        src={appointment.avatar}
-                        alt={appointment.doctor}
-                        className="w-12 h-12 rounded-full"
-                      />
-                      <div>
-                        <p className="font-semibold text-gray-900">{appointment.doctor}</p>
-                        <p className="text-sm text-gray-500">{appointment.specialty}</p>
-                        <div className="flex flex-wrap items-center gap-3 mt-2">
-                          <div className="flex items-center space-x-1.5 text-sm text-gray-600">
-                            <Calendar size={14} />
-                            <span>{appointment.date}</span>
-                          </div>
-                          <div className="flex items-center space-x-1.5 text-sm text-gray-600">
-                            <Clock size={14} />
-                            <span>{appointment.time}</span>
-                          </div>
+            </div>
+            <p className="text-sm text-gray-500 font-medium mb-1">{stat.title}</p>
+            <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Appointments & Activities */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Upcoming Appointments */}
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-5 sm:p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Upcoming Appointments</h3>
+                  <p className="text-sm text-gray-500 mt-1">Your scheduled visits</p>
+                </div>
+                <button className="flex items-center space-x-1 text-[#346ED6] hover:text-blue-700 text-sm font-medium">
+                  <Plus size={16} />
+                  <span className="hidden sm:inline">Book New</span>
+                </button>
+              </div>
+            </div>
+            <div className="p-5 sm:p-6 space-y-4">
+              {upcomingAppointments.map((appointment) => (
+                <div key={appointment.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors gap-4">
+                  <div className="flex items-start space-x-4">
+                    <img
+                      src={appointment.avatar}
+                      alt={appointment.doctor}
+                      className="w-12 h-12 rounded-full"
+                    />
+                    <div>
+                      <p className="font-semibold text-gray-900">{appointment.doctor}</p>
+                      <p className="text-sm text-gray-500">{appointment.specialty}</p>
+                      <div className="flex flex-wrap items-center gap-3 mt-2">
+                        <div className="flex items-center space-x-1.5 text-sm text-gray-600">
+                          <Calendar size={14} />
+                          <span>{appointment.date}</span>
+                        </div>
+                        <div className="flex items-center space-x-1.5 text-sm text-gray-600">
+                          <Clock size={14} />
+                          <span>{appointment.time}</span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${appointment.status === 'confirmed'
-                        ? 'bg-green-100 text-green-700 border border-green-200'
-                        : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
-                        }`}>
-                        {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                      </span>
-                      <button className="text-xs text-[#346ED6] hover:text-blue-700 font-medium">
-                        View Details
-                      </button>
-                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Recent Activities */}
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-5 sm:p-6 border-b border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900">Recent Activities</h3>
-                <p className="text-sm text-gray-500 mt-1">Your latest health updates</p>
-              </div>
-              <div className="p-5 sm:p-6">
-                <div className="space-y-4">
-                  {recentActivities.map((activity, index) => (
-                    <div key={activity.id} className="flex items-start space-x-4">
-                      <div className={`${activity.iconBg} p-2 rounded-lg flex-shrink-0`}>
-                        <activity.icon size={18} className={activity.iconColor} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">{activity.action}</p>
-                        <p className="text-sm text-gray-500">{activity.details}</p>
-                        <p className="text-xs text-gray-400 mt-1">{activity.time}</p>
-                      </div>
-                    </div>
-                  ))}
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${appointment.status === 'confirmed'
+                      ? 'bg-green-100 text-green-700 border border-green-200'
+                      : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+                      }`}>
+                      {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                    </span>
+                    <button className="text-xs text-[#346ED6] hover:text-blue-700 font-medium">
+                      View Details
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Right Column - Prescriptions & Health Metrics */}
-          <div className="space-y-6">
-            {/* Active Prescriptions */}
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-5 sm:p-6 border-b border-gray-100">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-gray-900">Active Prescriptions</h3>
-                  <button className="text-[#346ED6] hover:text-blue-700 text-sm font-medium">
-                    View All
-                  </button>
-                </div>
-              </div>
-              <div className="p-5 sm:p-6 space-y-4">
-                {recentPrescriptions.map((prescription) => (
-                  <div key={prescription.id} className="p-4 bg-green-50 rounded-xl border border-green-100">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <p className="font-semibold text-gray-900">{prescription.medication}</p>
-                        <p className="text-sm text-gray-600">{prescription.dosage} - {prescription.frequency}</p>
-                      </div>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                        Active
-                      </span>
+          {/* Recent Activities */}
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-5 sm:p-6 border-b border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900">Recent Activities</h3>
+              <p className="text-sm text-gray-500 mt-1">Your latest health updates</p>
+            </div>
+            <div className="p-5 sm:p-6">
+              <div className="space-y-4">
+                {recentActivities.map((activity, index) => (
+                  <div key={activity.id} className="flex items-start space-x-4">
+                    <div className={`${activity.iconBg} p-2 rounded-lg flex-shrink-0`}>
+                      <activity.icon size={18} className={activity.iconColor} />
                     </div>
-                    <div className="text-xs text-gray-500 space-y-1">
-                      <p>📋 {prescription.instructions}</p>
-                      <p>📅 {prescription.startDate} - {prescription.endDate}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900">{activity.action}</p>
+                      <p className="text-sm text-gray-500">{activity.details}</p>
+                      <p className="text-xs text-gray-400 mt-1">{activity.time}</p>
                     </div>
-                    <button className="mt-3 w-full text-center text-sm text-[#346ED6] hover:text-blue-700 font-medium py-2 bg-white rounded-lg border border-[#346ED6]/20 hover:border-[#346ED6]/40 transition-colors">
-                      Request Refill
-                    </button>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Health Metrics */}
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-5 sm:p-6 border-b border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900">Health Metrics</h3>
-                <p className="text-sm text-gray-500 mt-1">Latest vital signs</p>
-              </div>
-              <div className="p-5 sm:p-6">
-                <div className="grid grid-cols-2 gap-3">
-                  {healthMetrics.map((metric, index) => (
-                    <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                      <p className="text-xs text-gray-500">{metric.label}</p>
-                      <p className="text-lg font-bold text-gray-900 mt-1">
-                        {metric.value}
-                        <span className="text-xs font-normal text-gray-500 ml-1">{metric.unit}</span>
-                      </p>
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs mt-2 ${metric.status === 'normal'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-yellow-100 text-yellow-700'
-                        }`}>
-                        {metric.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-5 sm:p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-                <div className="space-y-2">
-                  <button className="w-full flex items-center justify-between p-3 bg-[#346ED6]/5 text-[#346ED6] rounded-lg hover:bg-[#346ED6]/10 transition-colors text-sm font-medium">
-                    <div className="flex items-center space-x-3">
-                      <Calendar size={18} />
-                      <span>Book Appointment</span>
-                    </div>
-                    <ChevronRight size={16} />
-                  </button>
-                  <button className="w-full flex items-center justify-between p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors text-sm font-medium">
-                    <div className="flex items-center space-x-3">
-                      <Pill size={18} />
-                      <span>Request Prescription</span>
-                    </div>
-                    <ChevronRight size={16} />
-                  </button>
-                  <button className="w-full flex items-center justify-between p-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors text-sm font-medium">
-                    <div className="flex items-center space-x-3">
-                      <FileText size={18} />
-                      <span>View Medical Records</span>
-                    </div>
-                    <ChevronRight size={16} />
-                  </button>
-                  <button className="w-full flex items-center justify-between p-3 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition-colors text-sm font-medium">
-                    <div className="flex items-center space-x-3">
-                      <CreditCard size={18} />
-                      <span>Pay Bills</span>
-                    </div>
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </main>
-    </div>
+
+        {/* Right Column - Prescriptions & Health Metrics */}
+        <div className="space-y-6">
+          {/* Active Prescriptions */}
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-5 sm:p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Active Prescriptions</h3>
+                <button className="text-[#346ED6] hover:text-blue-700 text-sm font-medium">
+                  View All
+                </button>
+              </div>
+            </div>
+            <div className="p-5 sm:p-6 space-y-4">
+              {recentPrescriptions.map((prescription) => (
+                <div key={prescription.id} className="p-4 bg-green-50 rounded-xl border border-green-100">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <p className="font-semibold text-gray-900">{prescription.medication}</p>
+                      <p className="text-sm text-gray-600">{prescription.dosage} - {prescription.frequency}</p>
+                    </div>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                      Active
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-500 space-y-1">
+                    <p>📋 {prescription.instructions}</p>
+                    <p>📅 {prescription.startDate} - {prescription.endDate}</p>
+                  </div>
+                  <button className="mt-3 w-full text-center text-sm text-[#346ED6] hover:text-blue-700 font-medium py-2 bg-white rounded-lg border border-[#346ED6]/20 hover:border-[#346ED6]/40 transition-colors">
+                    Request Refill
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Health Metrics */}
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-5 sm:p-6 border-b border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900">Health Metrics</h3>
+              <p className="text-sm text-gray-500 mt-1">Latest vital signs</p>
+            </div>
+            <div className="p-5 sm:p-6">
+              <div className="grid grid-cols-2 gap-3">
+                {healthMetrics.map((metric, index) => (
+                  <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                    <p className="text-xs text-gray-500">{metric.label}</p>
+                    <p className="text-lg font-bold text-gray-900 mt-1">
+                      {metric.value}
+                      <span className="text-xs font-normal text-gray-500 ml-1">{metric.unit}</span>
+                    </p>
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs mt-2 ${metric.status === 'normal'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-yellow-100 text-yellow-700'
+                      }`}>
+                      {metric.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-5 sm:p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+              <div className="space-y-2">
+                <button className="w-full flex items-center justify-between p-3 bg-[#346ED6]/5 text-[#346ED6] rounded-lg hover:bg-[#346ED6]/10 transition-colors text-sm font-medium">
+                  <div className="flex items-center space-x-3">
+                    <Calendar size={18} />
+                    <span>Book Appointment</span>
+                  </div>
+                  <ChevronRight size={16} />
+                </button>
+                <button className="w-full flex items-center justify-between p-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors text-sm font-medium">
+                  <div className="flex items-center space-x-3">
+                    <Pill size={18} />
+                    <span>Request Prescription</span>
+                  </div>
+                  <ChevronRight size={16} />
+                </button>
+                <button className="w-full flex items-center justify-between p-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors text-sm font-medium">
+                  <div className="flex items-center space-x-3">
+                    <FileText size={18} />
+                    <span>View Medical Records</span>
+                  </div>
+                  <ChevronRight size={16} />
+                </button>
+                <button className="w-full flex items-center justify-between p-3 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition-colors text-sm font-medium">
+                  <div className="flex items-center space-x-3">
+                    <CreditCard size={18} />
+                    <span>Pay Bills</span>
+                  </div>
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   )
 }

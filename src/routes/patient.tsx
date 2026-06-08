@@ -1,39 +1,23 @@
+import { LogoutModal } from '@/components/modals/LogoutModal';
 import { dbConnect } from '@/server/db.server';
 import { PatientModel } from '@/server/models/patient';
 import { useAppSession } from '@/server/session';
-import { createFileRoute, Link, Outlet, redirect, useLocation } from '@tanstack/react-router'
+import { createFileRoute, Link, Outlet, redirect, useLocation, useNavigate } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start';
 import {
-  Calendar,
-  Clock,
-  FileText,
-  Pill,
-  CreditCard,
-  Bell,
-  User,
-  Menu,
-  X,
-  ChevronRight,
-  Plus,
-  Activity,
-  Heart,
-  Stethoscope,
-  Home,
-  CalendarDays,
-  ClipboardList,
-  Receipt,
-  MessageSquare,
-  Settings,
-  LogOut,
-  Search,
-  ChevronLeft,
-  TrendingUp,
-  Users,
-  DollarSign,
-  ArrowUpRight,
-  ArrowDownRight,
-  MoreHorizontal,
-  AlertCircle
+    Pill,
+    Bell,
+    User,
+    Menu,
+    X,
+    Plus,
+    Activity,
+    Home,
+    CalendarDays,
+    ClipboardList,
+    Settings,
+    LogOut,
+    Search
 } from 'lucide-react'
 import { useState } from 'react';
 
@@ -67,8 +51,6 @@ export const Route = createFileRoute('/patient')({
 
         const { patient } = await getPatientSession()
 
-        console.log(patient)
-
         return { patient }
     },
 })
@@ -77,6 +59,10 @@ function PatientLayout() {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const location = useLocation();
+
+    const [isLogoutModelOpen, setLogoutModalOpen] = useState(false)
+
+    console.log(isLogoutModelOpen)
 
     const navigationItems = [
         { id: 'dashboard', path: "/patient", label: 'Dashboard', icon: Home },
@@ -97,54 +83,6 @@ function PatientLayout() {
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
-            {/* Top Navigation Bar */}
-            <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
-                <div className="px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
-                        {/* Mobile menu button */}
-                        <button
-                            onClick={() => setSidebarOpen(true)}
-                            className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
-                        >
-                            <Menu size={24} />
-                        </button>
-
-                        {/* Search Bar */}
-                        <div className="flex-1 max-w-md ml-4 hidden sm:block">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                                <input
-                                    type="text"
-                                    placeholder="Search appointments, records..."
-                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Right side icons */}
-                        <div className="flex items-center space-x-2 sm:space-x-4">
-                            {/* Notifications */}
-                            <button className="relative p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
-                                <Bell size={20} />
-                                <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full"></span>
-                            </button>
-
-                            {/* Quick Actions */}
-                            <button className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                                <Plus size={16} />
-                                <span>Book Appointment</span>
-                            </button>
-
-                            {/* Mobile Profile */}
-                            <button className="lg:hidden p-1">
-                                <div className="w-8 h-8 bg-[#346ED6] rounded-full flex items-center justify-center">
-                                    <User size={16} className="text-white" />
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </header>
             {/* Sidebar */}
             <aside className={`
                 fixed flex flex-col top-0 left-0 h-full w-72 bg-white border-r border-gray-200 z-50
@@ -186,8 +124,8 @@ function PatientLayout() {
                                     setSidebarOpen(false)
                                 }}
                                 className={`
-                  w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200
-                  ${isActive
+                                    w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200
+                                    ${isActive
                                         ? 'bg-[#346ED6] text-white'
                                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                                     }
@@ -205,13 +143,70 @@ function PatientLayout() {
 
                 {/* Sidebar Footer */}
                 <div className="p-4 border-t border-gray-200 mt-auto">
-                    <button className="w-full flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors">
+                    <button
+                        onClick={() => setLogoutModalOpen(true)}
+                        className="w-full flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors">
                         <LogOut size={20} />
                         <span className="text-sm font-medium">Logout</span>
                     </button>
                 </div>
             </aside>
-            <Outlet />
+            <div className="lg:pl-72">
+                {/* Top Navigation Bar */}
+                <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
+                    <div className="px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-16">
+                            {/* Mobile menu button */}
+                            <button
+                                onClick={() => setSidebarOpen(true)}
+                                className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+                            >
+                                <Menu size={24} />
+                            </button>
+
+                            {/* Search Bar */}
+                            <div className="flex-1 max-w-md ml-4 hidden sm:block">
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                                    <input
+                                        type="text"
+                                        placeholder="Search appointments, records..."
+                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Right side icons */}
+                            <div className="flex items-center space-x-2 sm:space-x-4">
+                                {/* Notifications */}
+                                <button className="relative p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
+                                    <Bell size={20} />
+                                    <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full"></span>
+                                </button>
+
+                                {/* Quick Actions */}
+                                <button className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                                    <Plus size={16} />
+                                    <span>Book Appointment</span>
+                                </button>
+
+                                {/* Mobile Profile */}
+                                <button className="lg:hidden p-1">
+                                    <div className="w-8 h-8 bg-[#346ED6] rounded-full flex items-center justify-center">
+                                        <User size={16} className="text-white" />
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <Outlet />
+            </div>
+
+            <LogoutModal
+                isLogoutModalOpen={isLogoutModelOpen}
+                setLogoutModalOpen={setLogoutModalOpen}
+            />
         </div>
     )
 }

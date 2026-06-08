@@ -230,236 +230,190 @@ function RouteComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Main Content */}
-      <div className="lg:pl-72">
-        {/* Top Navigation Bar */}
-        <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
-              >
-                <Menu size={24} />
-              </button>
+    <div>
+      {/* Page Content */}
+      <main className="p-4 sm:p-6 lg:p-8">
+        <div className="mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">My Prescriptions</h2>
+            <p className="text-sm text-gray-500 mt-1">Manage your medications and refill requests</p>
+          </div>
+        </div>
 
-              <div className="flex-1 max-w-md ml-4 hidden sm:block">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                  <input
-                    type="text"
-                    placeholder="Search medications..."
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
-                  />
-                </div>
+        {/* Prescription Stats */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          {[
+            {
+              label: 'Active',
+              value: prescriptionStats.active,
+              icon: Pill,
+              bgColor: 'bg-[#346ED6]/5',
+              iconColor: 'text-[#346ED6]',
+              borderColor: 'border-[#346ED6]/20'
+            },
+            {
+              label: 'Refills Available',
+              value: prescriptionStats.totalRefills,
+              icon: RefreshCw,
+              bgColor: 'bg-emerald-50',
+              iconColor: 'text-emerald-600',
+              borderColor: 'border-emerald-200'
+            },
+            {
+              label: 'Completed',
+              value: prescriptionStats.completed,
+              icon: CheckCircle2,
+              bgColor: 'bg-blue-50',
+              iconColor: 'text-blue-600',
+              borderColor: 'border-blue-200'
+            },
+            {
+              label: 'Next Refill',
+              value: prescriptionStats.nextRefill,
+              icon: Calendar,
+              bgColor: 'bg-purple-50',
+              iconColor: 'text-purple-600',
+              borderColor: 'border-purple-200'
+            }
+          ].map((stat, index) => (
+            <div
+              key={index}
+              className={`${stat.bgColor} border ${stat.borderColor} rounded-xl p-4`}
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
+                <stat.icon size={20} className={stat.iconColor} />
               </div>
-
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <button className="relative p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
-                  <Bell size={20} />
-                  <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                <button className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                  <RefreshCw size={16} />
-                  <span>Request Refill</span>
-                </button>
-
-                <button className="lg:hidden p-1">
-                  <div className="w-8 h-8 bg-[#346ED6] rounded-full flex items-center justify-center">
-                    <User size={16} className="text-white" />
-                  </div>
-                </button>
-              </div>
+              <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
             </div>
-          </div>
-        </header>
+          ))}
+        </div>
 
-        {/* Page Content */}
-        <main className="p-4 sm:p-6 lg:p-8">
-          <div className="mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">My Prescriptions</h2>
-              <p className="text-sm text-gray-500 mt-1">Manage your medications and refill requests</p>
-            </div>
-          </div>
-
-          {/* Prescription Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-            {[
-              {
-                label: 'Active',
-                value: prescriptionStats.active,
-                icon: Pill,
-                bgColor: 'bg-[#346ED6]/5',
-                iconColor: 'text-[#346ED6]',
-                borderColor: 'border-[#346ED6]/20'
-              },
-              {
-                label: 'Refills Available',
-                value: prescriptionStats.totalRefills,
-                icon: RefreshCw,
-                bgColor: 'bg-emerald-50',
-                iconColor: 'text-emerald-600',
-                borderColor: 'border-emerald-200'
-              },
-              {
-                label: 'Completed',
-                value: prescriptionStats.completed,
-                icon: CheckCircle2,
-                bgColor: 'bg-blue-50',
-                iconColor: 'text-blue-600',
-                borderColor: 'border-blue-200'
-              },
-              {
-                label: 'Next Refill',
-                value: prescriptionStats.nextRefill,
-                icon: Calendar,
-                bgColor: 'bg-purple-50',
-                iconColor: 'text-purple-600',
-                borderColor: 'border-purple-200'
-              }
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className={`${stat.bgColor} border ${stat.borderColor} rounded-xl p-4`}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
-                  <stat.icon size={20} className={stat.iconColor} />
-                </div>
-                <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Tab Navigation */}
-          <div className="bg-white rounded-xl border border-gray-100 mb-6">
-            <div className="border-b border-gray-200">
-              <nav className="flex overflow-x-auto">
-                {[
-                  { id: 'active', label: 'Active', count: activePrescriptions.length },
-                  { id: 'past', label: 'Past', count: pastPrescriptions.length },
-                  { id: 'all', label: 'All Prescriptions', count: activePrescriptions.length + pastPrescriptions.length }
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`
+        {/* Tab Navigation */}
+        <div className="bg-white rounded-xl border border-gray-100 mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="flex overflow-x-auto">
+              {[
+                { id: 'active', label: 'Active', count: activePrescriptions.length },
+                { id: 'past', label: 'Past', count: pastPrescriptions.length },
+                { id: 'all', label: 'All Prescriptions', count: activePrescriptions.length + pastPrescriptions.length }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`
                       flex-shrink-0 px-6 py-4 text-sm font-medium border-b-2 transition-colors
                       ${activeTab === tab.id
-                        ? 'border-[#346ED6] text-[#346ED6]'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                      }
+                      ? 'border-[#346ED6] text-[#346ED6]'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }
                     `}
-                  >
-                    {tab.label}
-                    <span className="ml-2 bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs">
-                      {tab.count}
-                    </span>
-                  </button>
-                ))}
-              </nav>
-            </div>
+                >
+                  {tab.label}
+                  <span className="ml-2 bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs">
+                    {tab.count}
+                  </span>
+                </button>
+              ))}
+            </nav>
           </div>
+        </div>
 
-          {/* Pharmacy Info Banner */}
-          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-5 sm:p-6 text-white  mb-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                  <Package size={24} />
-                </div>
-                <div>
-                  <h3 className="font-semibold">Preferred Pharmacy</h3>
-                  <p className="text-blue-100 text-sm">{patientInfo.pharmacy}</p>
-                </div>
+        {/* Pharmacy Info Banner */}
+        <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-5 sm:p-6 text-white  mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                <Package size={24} />
               </div>
-              <button className="px-4 py-2 bg-white text-[#346ED6] rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
-                Change Pharmacy
-              </button>
+              <div>
+                <h3 className="font-semibold">Preferred Pharmacy</h3>
+                <p className="text-blue-100 text-sm">{patientInfo.pharmacy}</p>
+              </div>
             </div>
+            <button className="px-4 py-2 bg-white text-[#346ED6] rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+              Change Pharmacy
+            </button>
           </div>
+        </div>
 
-          {/* Prescriptions List */}
-          <div className="space-y-3">
-            {(activeTab === 'active' ? activePrescriptions : activeTab === 'past' ? pastPrescriptions : [...activePrescriptions, ...pastPrescriptions]).map((prescription) => (
-              <div key={prescription.id} className="bg-white rounded-xl border border-gray-100 hover:border-[#346ED6]/30 transition-all duration-200">
-                <div className="p-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    {/* Medication Info */}
-                    <div className="flex items-center space-x-3 flex-1 min-w-0">
-                      <div className="bg-[#346ED6]/10 p-2.5 rounded-lg flex-shrink-0">
-                        <Pill size={20} className="text-[#346ED6]" />
+        {/* Prescriptions List */}
+        <div className="space-y-3">
+          {(activeTab === 'active' ? activePrescriptions : activeTab === 'past' ? pastPrescriptions : [...activePrescriptions, ...pastPrescriptions]).map((prescription) => (
+            <div key={prescription.id} className="bg-white rounded-xl border border-gray-100 hover:border-[#346ED6]/30 transition-all duration-200">
+              <div className="p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  {/* Medication Info */}
+                  <div className="flex items-center space-x-3 flex-1 min-w-0">
+                    <div className="bg-[#346ED6]/10 p-2.5 rounded-lg flex-shrink-0">
+                      <Pill size={20} className="text-[#346ED6]" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-sm font-semibold text-gray-900 truncate">{prescription.medication}</h3>
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${prescription.status === 'active' ? 'bg-emerald-50 text-emerald-700' :
+                          prescription.status === 'completed' ? 'bg-blue-50 text-blue-700' :
+                            'bg-gray-50 text-gray-600'
+                          }`}>
+                          {prescription.status.charAt(0).toUpperCase() + prescription.status.slice(1)}
+                        </span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-sm font-semibold text-gray-900 truncate">{prescription.medication}</h3>
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${prescription.status === 'active' ? 'bg-emerald-50 text-emerald-700' :
-                              prescription.status === 'completed' ? 'bg-blue-50 text-blue-700' :
-                                'bg-gray-50 text-gray-600'
-                            }`}>
-                            {prescription.status.charAt(0).toUpperCase() + prescription.status.slice(1)}
-                          </span>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-0.5">{prescription.dosage} • {prescription.frequency}</p>
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-gray-500">
-                          <span>{prescription.prescribedBy}</span>
-                          <span className="text-gray-300 hidden sm:inline">•</span>
-                          <span>Started: {prescription.startDate}</span>
-                          {prescription.refillsRemaining > 0 && (
-                            <>
-                              <span className="text-gray-300 hidden sm:inline">•</span>
-                              <span className="text-emerald-600 font-medium">{prescription.refillsRemaining} refills left</span>
-                            </>
-                          )}
-                        </div>
+                      <p className="text-xs text-gray-500 mt-0.5">{prescription.dosage} • {prescription.frequency}</p>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-gray-500">
+                        <span>{prescription.prescribedBy}</span>
+                        <span className="text-gray-300 hidden sm:inline">•</span>
+                        <span>Started: {prescription.startDate}</span>
+                        {prescription.refillsRemaining > 0 && (
+                          <>
+                            <span className="text-gray-300 hidden sm:inline">•</span>
+                            <span className="text-emerald-600 font-medium">{prescription.refillsRemaining} refills left</span>
+                          </>
+                        )}
                       </div>
                     </div>
+                  </div>
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-2 sm:ml-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
-                      {prescription.status === 'active' && prescription.refillsRemaining > 0 && (
-                        <button
-                          onClick={() => handleRefill(prescription)}
-                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
-                        >
-                          Refill
-                        </button>
-                      )}
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 sm:ml-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+                    {prescription.status === 'active' && prescription.refillsRemaining > 0 && (
                       <button
-                        onClick={() => handleViewDetails(prescription)}
-                        className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
+                        onClick={() => handleRefill(prescription)}
+                        className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
                       >
-                        View Details
+                        Refill
                       </button>
-                    </div>
-                  </div>
-
-                  {/* Instructions - Collapsible on mobile */}
-                  <div className="mt-3 bg-blue-50 rounded-lg p-3 border border-blue-100">
-                    <p className="text-xs text-gray-600">
-                      <span className="font-medium text-gray-700">Instructions:</span> {prescription.instructions}
-                    </p>
+                    )}
+                    <button
+                      onClick={() => handleViewDetails(prescription)}
+                      className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
+                    >
+                      View Details
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
 
-          {/* Empty State */}
-          {(activeTab === 'active' ? activePrescriptions : activeTab === 'past' ? pastPrescriptions : [...activePrescriptions, ...pastPrescriptions]).length === 0 && (
-            <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Pill className="h-8 w-8 text-gray-300" />
+                {/* Instructions - Collapsible on mobile */}
+                <div className="mt-3 bg-blue-50 rounded-lg p-3 border border-blue-100">
+                  <p className="text-xs text-gray-600">
+                    <span className="font-medium text-gray-700">Instructions:</span> {prescription.instructions}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-sm font-medium text-gray-900">No prescriptions found</h3>
-              <p className="text-xs text-gray-500 mt-1">You don't have any {activeTab} prescriptions</p>
             </div>
-          )}
-        </main>
-      </div>
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {(activeTab === 'active' ? activePrescriptions : activeTab === 'past' ? pastPrescriptions : [...activePrescriptions, ...pastPrescriptions]).length === 0 && (
+          <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
+            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Pill className="h-8 w-8 text-gray-300" />
+            </div>
+            <h3 className="text-sm font-medium text-gray-900">No prescriptions found</h3>
+            <p className="text-xs text-gray-500 mt-1">You don't have any {activeTab} prescriptions</p>
+          </div>
+        )}
+      </main>
 
       {/* Prescription Detail Modal */}
       {showDetailModal && selectedPrescription && (

@@ -140,335 +140,280 @@ function RouteComponent() {
 
   return (
     <div>
-      {/* Main Content */}
-      <div className="lg:pl-72">
-        {/* Top Navigation Bar */}
-        <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              {/* Mobile menu button */}
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
-              >
-                <Menu size={24} />
-              </button>
-
-              {/* Search Bar */}
-              <div className="flex-1 max-w-md ml-4 hidden sm:block">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                  <input
-                    type="text"
-                    placeholder="Search by doctor, specialty..."
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
-                  />
-                </div>
-              </div>
-
-              {/* Right side icons */}
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                {/* Notifications */}
-                <button className="relative p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
-                  <Bell size={20} />
-                  <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                {/* Book New Button */}
-                <button
-                  onClick={() => setShowBookModal(true)}
-                  className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                >
-                  <Plus size={16} />
-                  <span>Book Appointment</span>
-                </button>
-
-                {/* Mobile Profile */}
-                <button className="lg:hidden p-1">
-                  <div className="w-8 h-8 bg-[#346ED6] rounded-full flex items-center justify-center">
-                    <User size={16} className="text-white" />
-                  </div>
-                </button>
-              </div>
+      {/* Page Content */}
+      <main className="p-4 sm:p-6 lg:p-8">
+        {/* Page Header */}
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">My Appointments</h2>
+              <p className="text-sm text-gray-500 mt-1">Manage and track your medical appointments</p>
             </div>
+            <button
+              onClick={() => setShowBookModal(true)}
+              className="sm:hidden w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            >
+              <Plus size={16} />
+              <span>Book New Appointment</span>
+            </button>
           </div>
-        </header>
+        </div>
 
-        {/* Page Content */}
-        <main className="p-4 sm:p-6 lg:p-8">
-          {/* Page Header */}
-          <div className="mb-6 sm:mb-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">My Appointments</h2>
-                <p className="text-sm text-gray-500 mt-1">Manage and track your medical appointments</p>
+        {/* Appointment Stats */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          {[
+            {
+              label: 'Total Appointments',
+              value: appointmentStats.total,
+              icon: CalendarDays,
+              bgColor: 'bg-[#346ED6]/5',
+              iconColor: 'text-[#346ED6]',
+              borderColor: 'border-[#346ED6]/20'
+            },
+            {
+              label: 'Upcoming',
+              value: appointmentStats.upcoming,
+              icon: Clock,
+              bgColor: 'bg-emerald-50',
+              iconColor: 'text-emerald-600',
+              borderColor: 'border-emerald-200'
+            },
+            {
+              label: 'Completed',
+              value: appointmentStats.completed,
+              icon: CheckCircle2,
+              bgColor: 'bg-blue-50',
+              iconColor: 'text-blue-600',
+              borderColor: 'border-blue-200'
+            },
+            {
+              label: 'Cancelled',
+              value: appointmentStats.cancelled,
+              icon: XCircle,
+              bgColor: 'bg-rose-50',
+              iconColor: 'text-rose-400',
+              borderColor: 'border-rose-200'
+            }
+          ].map((stat, index) => (
+            <div
+              key={index}
+              className={`${stat.bgColor} border ${stat.borderColor} rounded-xl p-4`}
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
+                <stat.icon size={20} className={stat.iconColor} />
               </div>
-              <button
-                onClick={() => setShowBookModal(true)}
-                className="sm:hidden w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-              >
-                <Plus size={16} />
-                <span>Book New Appointment</span>
-              </button>
+              <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Appointment Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-            {[
-              {
-                label: 'Total Appointments',
-                value: appointmentStats.total,
-                icon: CalendarDays,
-                bgColor: 'bg-[#346ED6]/5',
-                iconColor: 'text-[#346ED6]',
-                borderColor: 'border-[#346ED6]/20'
-              },
-              {
-                label: 'Upcoming',
-                value: appointmentStats.upcoming,
-                icon: Clock,
-                bgColor: 'bg-emerald-50',
-                iconColor: 'text-emerald-600',
-                borderColor: 'border-emerald-200'
-              },
-              {
-                label: 'Completed',
-                value: appointmentStats.completed,
-                icon: CheckCircle2,
-                bgColor: 'bg-blue-50',
-                iconColor: 'text-blue-600',
-                borderColor: 'border-blue-200'
-              },
-              {
-                label: 'Cancelled',
-                value: appointmentStats.cancelled,
-                icon: XCircle,
-                bgColor: 'bg-rose-50',
-                iconColor: 'text-rose-400',
-                borderColor: 'border-rose-200'
-              }
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className={`${stat.bgColor} border ${stat.borderColor} rounded-xl p-4`}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
-                  <stat.icon size={20} className={stat.iconColor} />
-                </div>
-                <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* View Toggle & Filters */}
-          <div className="bg-white rounded-xl border border-gray-100 mb-6">
-            <div className="p-4">
-              <div className="flex flex-col sm:flex-row gap-4">
-                {/* View Toggle */}
-                <div className="flex bg-gray-100 rounded-lg p-1">
-                  {[
-                    { id: 'upcoming', label: 'Upcoming' },
-                    { id: 'past', label: 'Past' },
-                    { id: 'calendar', label: 'Calendar' }
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setViewMode(tab.id)}
-                      className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all ${viewMode === tab.id
-                        ? 'bg-white text-[#346ED6]'
-                        : 'text-gray-600 hover:text-gray-900'
-                        }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Filters */}
-                <div className="flex-1 flex items-center justify-end space-x-2">
+        {/* View Toggle & Filters */}
+        <div className="bg-white rounded-xl border border-gray-100 mb-6">
+          <div className="p-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              {/* View Toggle */}
+              <div className="flex bg-gray-100 rounded-lg p-1">
+                {[
+                  { id: 'upcoming', label: 'Upcoming' },
+                  { id: 'past', label: 'Past' },
+                  { id: 'calendar', label: 'Calendar' }
+                ].map((tab) => (
                   <button
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50"
+                    key={tab.id}
+                    onClick={() => setViewMode(tab.id)}
+                    className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all ${viewMode === tab.id
+                      ? 'bg-white text-[#346ED6]'
+                      : 'text-gray-600 hover:text-gray-900'
+                      }`}
                   >
-                    <SlidersHorizontal size={16} />
-                    <span>Filters</span>
+                    {tab.label}
                   </button>
-                  <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
-                    <option>All Types</option>
-                    <option>In-person</option>
-                    <option>Video Consultation</option>
-                    <option>Phone Call</option>
-                  </select>
-                </div>
+                ))}
               </div>
 
-              {/* Extended Filters */}
-              {showFilters && (
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-xs font-medium text-gray-700 mb-1">Department</label>
-                      <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
-                        <option>All Departments</option>
-                        <option>Cardiology</option>
-                        <option>Dermatology</option>
-                        <option>Orthopedics</option>
-                        <option>General Medicine</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-700 mb-1">Date Range</label>
-                      <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
-                        <option>All Time</option>
-                        <option>This Week</option>
-                        <option>This Month</option>
-                        <option>Last 3 Months</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-700 mb-1">Status</label>
-                      <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
-                        <option>All Status</option>
-                        <option>Confirmed</option>
-                        <option>Pending</option>
-                        <option>Completed</option>
-                        <option>Cancelled</option>
-                      </select>
-                    </div>
+              {/* Filters */}
+              <div className="flex-1 flex items-center justify-end space-x-2">
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 hover:bg-gray-50"
+                >
+                  <SlidersHorizontal size={16} />
+                  <span>Filters</span>
+                </button>
+                <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
+                  <option>All Types</option>
+                  <option>In-person</option>
+                  <option>Video Consultation</option>
+                  <option>Phone Call</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Extended Filters */}
+            {showFilters && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Department</label>
+                    <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
+                      <option>All Departments</option>
+                      <option>Cardiology</option>
+                      <option>Dermatology</option>
+                      <option>Orthopedics</option>
+                      <option>General Medicine</option>
+                    </select>
                   </div>
-                  <div className="flex justify-end mt-4 space-x-2">
-                    <button className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900">
-                      Clear Filters
-                    </button>
-                    <button className="px-4 py-2 bg-[#346ED6] text-white rounded-lg text-sm hover:bg-blue-700">
-                      Apply Filters
-                    </button>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Date Range</label>
+                    <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
+                      <option>All Time</option>
+                      <option>This Week</option>
+                      <option>This Month</option>
+                      <option>Last 3 Months</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-1">Status</label>
+                    <select className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
+                      <option>All Status</option>
+                      <option>Confirmed</option>
+                      <option>Pending</option>
+                      <option>Completed</option>
+                      <option>Cancelled</option>
+                    </select>
                   </div>
                 </div>
-              )}
-            </div>
+                <div className="flex justify-end mt-4 space-x-2">
+                  <button className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900">
+                    Clear Filters
+                  </button>
+                  <button className="px-4 py-2 bg-[#346ED6] text-white rounded-lg text-sm hover:bg-blue-700">
+                    Apply Filters
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
+        </div>
 
-          {/* Appointments List */}
-          <div className="space-y-3">
-            {(viewMode === 'upcoming' ? upcomingAppointments : pastAppointments).map((appointment) => (
-              <div key={appointment.id} className="border border-gray-100 hover:border-[#346ED6]/30 bg-white rounded-xl">
-                <div className="p-4">
-                  {/* Mobile & Desktop Layout */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    {/* Doctor Info & Appointment Details */}
-                    <div className="flex items-center space-x-3 flex-1 min-w-0">
-                      <img
-                        src={appointment.doctor.avatar}
-                        alt={appointment.doctor.name}
-                        className="w-12 h-12 rounded-full flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-sm font-semibold text-gray-900 truncate">{appointment.doctor.name}</h3>
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${appointment.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700' :
-                            appointment.status === 'pending' ? 'bg-amber-50 text-amber-700' :
-                              appointment.status === 'completed' ? 'bg-blue-50 text-blue-700' :
-                                'bg-gray-50 text-gray-600'
-                            }`}>
-                            {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                          </span>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-0.5">{appointment.doctor.specialty}</p>
+        {/* Appointments List */}
+        <div className="space-y-3">
+          {(viewMode === 'upcoming' ? upcomingAppointments : pastAppointments).map((appointment) => (
+            <div key={appointment.id} className="border border-gray-100 hover:border-[#346ED6]/30 bg-white rounded-xl">
+              <div className="p-4">
+                {/* Mobile & Desktop Layout */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  {/* Doctor Info & Appointment Details */}
+                  <div className="flex items-center space-x-3 flex-1 min-w-0">
+                    <img
+                      src={appointment.doctor.avatar}
+                      alt={appointment.doctor.name}
+                      className="w-12 h-12 rounded-full flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-sm font-semibold text-gray-900 truncate">{appointment.doctor.name}</h3>
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${appointment.status === 'confirmed' ? 'bg-emerald-50 text-emerald-700' :
+                          appointment.status === 'pending' ? 'bg-amber-50 text-amber-700' :
+                            appointment.status === 'completed' ? 'bg-blue-50 text-blue-700' :
+                              'bg-gray-50 text-gray-600'
+                          }`}>
+                          {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-0.5">{appointment.doctor.specialty}</p>
 
-                        {/* Date/Time Row - Stacks on mobile */}
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-gray-500">
-                          <span className="flex items-center space-x-1 whitespace-nowrap">
-                            <Calendar size={12} />
-                            <span>{appointment.date}</span>
-                          </span>
-                          <span className="flex items-center space-x-1 whitespace-nowrap">
-                            <Clock size={12} />
-                            <span>{appointment.time}</span>
-                          </span>
-                          <span className="flex items-center space-x-1 whitespace-nowrap">
-                            {appointment.type.includes('Video') ? <Video size={12} /> : <MapPin size={12} />}
-                            <span className="truncate">{appointment.type.includes('Video') ? 'Virtual' : appointment.location}</span>
-                          </span>
-                        </div>
+                      {/* Date/Time Row - Stacks on mobile */}
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-gray-500">
+                        <span className="flex items-center space-x-1 whitespace-nowrap">
+                          <Calendar size={12} />
+                          <span>{appointment.date}</span>
+                        </span>
+                        <span className="flex items-center space-x-1 whitespace-nowrap">
+                          <Clock size={12} />
+                          <span>{appointment.time}</span>
+                        </span>
+                        <span className="flex items-center space-x-1 whitespace-nowrap">
+                          {appointment.type.includes('Video') ? <Video size={12} /> : <MapPin size={12} />}
+                          <span className="truncate">{appointment.type.includes('Video') ? 'Virtual' : appointment.location}</span>
+                        </span>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Actions - Horizontal on mobile, unchanged on desktop */}
-                    <div className="flex items-center gap-2 sm:ml-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
-                      {appointment.status === 'confirmed' && (
-                        <>
-                          <button
-                            onClick={() => handleReschedule(appointment)}
-                            className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors whitespace-nowrap"
-                          >
-                            Reschedule
-                          </button>
-                          <button
-                            onClick={() => handleCancel(appointment)}
-                            className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors whitespace-nowrap"
-                          >
-                            Cancel
-                          </button>
-                        </>
-                      )}
-                      {appointment.status === 'pending' && (
+                  {/* Actions - Horizontal on mobile, unchanged on desktop */}
+                  <div className="flex items-center gap-2 sm:ml-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+                    {appointment.status === 'confirmed' && (
+                      <>
+                        <button
+                          onClick={() => handleReschedule(appointment)}
+                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors whitespace-nowrap"
+                        >
+                          Reschedule
+                        </button>
                         <button
                           onClick={() => handleCancel(appointment)}
                           className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors whitespace-nowrap"
                         >
                           Cancel
                         </button>
-                      )}
-                      {appointment.status === 'completed' && (
-                        <button
-                          onClick={() => handleRebook(appointment)}
-                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
-                        >
-                          Book Again
-                        </button>
-                      )}
-                      {appointment.status === 'cancelled' && appointment.canReschedule && (
-                        <button
-                          onClick={() => handleRebook(appointment)}
-                          className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
-                        >
-                          Rebook
-                        </button>
-                      )}
-                    </div>
+                      </>
+                    )}
+                    {appointment.status === 'pending' && (
+                      <button
+                        onClick={() => handleCancel(appointment)}
+                        className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors whitespace-nowrap"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                    {appointment.status === 'completed' && (
+                      <button
+                        onClick={() => handleRebook(appointment)}
+                        className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
+                      >
+                        Book Again
+                      </button>
+                    )}
+                    {appointment.status === 'cancelled' && appointment.canReschedule && (
+                      <button
+                        onClick={() => handleRebook(appointment)}
+                        className="flex-1 sm:flex-none px-3 py-1.5 text-xs font-medium text-[#346ED6] hover:bg-[#346ED6]/5 rounded-lg transition-colors whitespace-nowrap"
+                      >
+                        Rebook
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-          {/* Empty State */}
-          {(viewMode === 'upcoming' ? upcomingAppointments : pastAppointments).length === 0 && (
-            <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="h-8 w-8 text-gray-300" />
-              </div>
-              <h3 className="text-sm font-medium text-gray-900">No appointments found</h3>
-              <p className="text-xs text-gray-500 mt-1">
-                {viewMode === 'upcoming'
-                  ? "You don't have any upcoming appointments"
-                  : "No past appointments found"}
-              </p>
-              {viewMode === 'upcoming' && (
-                <button
-                  onClick={() => setShowBookModal(true)}
-                  className="mt-4 inline-flex items-center px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-                >
-                  <Plus size={16} className="mr-1.5" />
-                  Book Appointment
-                </button>
-              )}
             </div>
-          )}
-        </main>
-      </div>
+          ))}
+        </div>
+        {/* Empty State */}
+        {(viewMode === 'upcoming' ? upcomingAppointments : pastAppointments).length === 0 && (
+          <div className="bg-white rounded-xl border border-gray-100 p-8 text-center">
+            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Calendar className="h-8 w-8 text-gray-300" />
+            </div>
+            <h3 className="text-sm font-medium text-gray-900">No appointments found</h3>
+            <p className="text-xs text-gray-500 mt-1">
+              {viewMode === 'upcoming'
+                ? "You don't have any upcoming appointments"
+                : "No past appointments found"}
+            </p>
+            {viewMode === 'upcoming' && (
+              <button
+                onClick={() => setShowBookModal(true)}
+                className="mt-4 inline-flex items-center px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+              >
+                <Plus size={16} className="mr-1.5" />
+                Book Appointment
+              </button>
+            )}
+          </div>
+        )}
+      </main>
 
       {/* Appointment Detail Modal */}
       {showDetailModal && selectedAppointment && (

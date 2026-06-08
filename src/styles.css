@@ -50,6 +50,10 @@
     min-height: 100%;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   body {
     margin: 0;
     font-family: var(--font-sans);

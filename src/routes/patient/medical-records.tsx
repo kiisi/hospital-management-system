@@ -252,587 +252,542 @@ function RouteComponent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="lg:pl-72">
-        {/* Top Navigation Bar */}
-        <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
-              >
-                <Menu size={24} />
-              </button>
+    <div>
+      {/* Page Content */}
+      <main className="p-4 sm:p-6 lg:p-8">
+        <div className="mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Medical Records</h2>
+            <p className="text-sm text-gray-500 mt-1">View your complete medical history and health records</p>
+          </div>
+        </div>
 
-              <div className="flex-1 max-w-md ml-4 hidden sm:block">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                  <input
-                    type="text"
-                    placeholder="Search medical records..."
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
+        {/* Patient Info Banner */}
+        <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-5 text-white mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm flex-shrink-0">
+              <User size={24} className="text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">{patientInfo.name}</h3>
+              <div className="flex items-center gap-2 mt-1 text-sm text-blue-100">
+                <span>ID: {patientInfo.id}</span>
+                <span className="text-blue-300">•</span>
+                <span>{patientInfo.bloodGroup}</span>
+                <span className="text-blue-300">•</span>
+                <span>{patientInfo.age} years</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="bg-white rounded-xl border border-gray-100 mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="flex overflow-x-auto">
+              {[
+                { id: 'summary', label: 'Health Summary' },
+                { id: 'vitals', label: 'Vital Signs' },
+                { id: 'records', label: 'Medical Records' },
+                { id: 'labs', label: 'Lab Results' },
+                { id: 'documents', label: 'Documents' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`
+                      flex-shrink-0 px-6 py-4 text-sm font-medium border-b-2 transition-colors
+                      ${activeTab === tab.id
+                      ? 'border-[#346ED6] text-[#346ED6]'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }
+                    `}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'summary' && (
+          <div className="space-y-6">
+            {/* Vital Signs Overview */}
+            <div className="bg-white rounded-xl border border-gray-100">
+              <div className="p-6 border-b border-gray-100">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-gray-900">Current Vital Signs</h3>
+                  <button className="text-[#346ED6] hover:text-blue-700 text-sm font-medium">
+                    View History
+                  </button>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <VitalSignCard
+                    icon={HeartPulse}
+                    label="Blood Pressure"
+                    value={`${vitalsHistory.current.bloodPressure.systolic}/${vitalsHistory.current.bloodPressure.diastolic}`}
+                    unit="mmHg"
+                    status="normal"
+                    trend="down"
+                    date="Dec 28"
+                    color="bg-red-500"
+                  />
+                  <VitalSignCard
+                    icon={Heart}
+                    label="Heart Rate"
+                    value={vitalsHistory.current.heartRate.value}
+                    unit="bpm"
+                    status="normal"
+                    trend="stable"
+                    date="Dec 28"
+                    color="bg-pink-500"
+                  />
+                  <VitalSignCard
+                    icon={Thermometer}
+                    label="Temperature"
+                    value={vitalsHistory.current.temperature.value}
+                    unit="°F"
+                    status="normal"
+                    trend="stable"
+                    date="Dec 28"
+                    color="bg-orange-500"
+                  />
+                  <VitalSignCard
+                    icon={Weight}
+                    label="Oxygen Saturation"
+                    value={vitalsHistory.current.oxygenSaturation.value}
+                    unit="%"
+                    status="normal"
+                    trend="stable"
+                    date="Dec 28"
+                    color="bg-cyan-500"
+                  />
+                  <VitalSignCard
+                    icon={Weight}
+                    label="Weight"
+                    value={vitalsHistory.current.weight.value}
+                    unit="lbs"
+                    status="normal"
+                    trend="down"
+                    date="Dec 28"
+                    color="bg-indigo-500"
+                  />
+                  <VitalSignCard
+                    icon={Ruler}
+                    label="Height"
+                    value={vitalsHistory.current.height.value}
+                    unit=""
+                    status="normal"
+                    trend={null}
+                    date="Dec 28"
+                    color="bg-purple-500"
                   />
                 </div>
               </div>
-
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <button className="relative p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
-                  <Bell size={20} />
-                  <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                <button className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                  <Upload size={16} />
-                  <span>Upload Documents</span>
-                </button>
-
-                <button className="lg:hidden p-1">
-                  <div className="w-8 h-8 bg-[#346ED6] rounded-full flex items-center justify-center">
-                    <User size={16} className="text-white" />
-                  </div>
-                </button>
-              </div>
             </div>
-          </div>
-        </header>
 
-        {/* Page Content */}
-        <main className="p-4 sm:p-6 lg:p-8">
-          <div className="mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">Medical Records</h2>
-              <p className="text-sm text-gray-500 mt-1">View your complete medical history and health records</p>
-            </div>
-          </div>
-
-          {/* Patient Info Banner */}
-          <div className="bg-gradient-to-r from-[#346ED6] to-blue-700 rounded-2xl p-5 text-white mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm flex-shrink-0">
-                <User size={24} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">{patientInfo.name}</h3>
-                <div className="flex items-center gap-2 mt-1 text-sm text-blue-100">
-                  <span>ID: {patientInfo.id}</span>
-                  <span className="text-blue-300">•</span>
-                  <span>{patientInfo.bloodGroup}</span>
-                  <span className="text-blue-300">•</span>
-                  <span>{patientInfo.age} years</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Tab Navigation */}
-          <div className="bg-white rounded-xl border border-gray-100 mb-6">
-            <div className="border-b border-gray-200">
-              <nav className="flex overflow-x-auto">
-                {[
-                  { id: 'summary', label: 'Health Summary' },
-                  { id: 'vitals', label: 'Vital Signs' },
-                  { id: 'records', label: 'Medical Records' },
-                  { id: 'labs', label: 'Lab Results' },
-                  { id: 'documents', label: 'Documents' }
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`
-                      flex-shrink-0 px-6 py-4 text-sm font-medium border-b-2 transition-colors
-                      ${activeTab === tab.id
-                        ? 'border-[#346ED6] text-[#346ED6]'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                      }
-                    `}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-          </div>
-
-          {/* Tab Content */}
-          {activeTab === 'summary' && (
-            <div className="space-y-6">
-              {/* Vital Signs Overview */}
+            {/* Recent Records & Lab Results */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Recent Medical Records */}
               <div className="bg-white rounded-xl border border-gray-100">
                 <div className="p-6 border-b border-gray-100">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-gray-900">Current Vital Signs</h3>
-                    <button className="text-[#346ED6] hover:text-blue-700 text-sm font-medium">
-                      View History
-                    </button>
-                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Recent Medical Records</h3>
                 </div>
-                <div className="p-6">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <VitalSignCard
-                      icon={HeartPulse}
-                      label="Blood Pressure"
-                      value={`${vitalsHistory.current.bloodPressure.systolic}/${vitalsHistory.current.bloodPressure.diastolic}`}
-                      unit="mmHg"
-                      status="normal"
-                      trend="down"
-                      date="Dec 28"
-                      color="bg-red-500"
-                    />
-                    <VitalSignCard
-                      icon={Heart}
-                      label="Heart Rate"
-                      value={vitalsHistory.current.heartRate.value}
-                      unit="bpm"
-                      status="normal"
-                      trend="stable"
-                      date="Dec 28"
-                      color="bg-pink-500"
-                    />
-                    <VitalSignCard
-                      icon={Thermometer}
-                      label="Temperature"
-                      value={vitalsHistory.current.temperature.value}
-                      unit="°F"
-                      status="normal"
-                      trend="stable"
-                      date="Dec 28"
-                      color="bg-orange-500"
-                    />
-                    <VitalSignCard
-                      icon={Weight}
-                      label="Oxygen Saturation"
-                      value={vitalsHistory.current.oxygenSaturation.value}
-                      unit="%"
-                      status="normal"
-                      trend="stable"
-                      date="Dec 28"
-                      color="bg-cyan-500"
-                    />
-                    <VitalSignCard
-                      icon={Weight}
-                      label="Weight"
-                      value={vitalsHistory.current.weight.value}
-                      unit="lbs"
-                      status="normal"
-                      trend="down"
-                      date="Dec 28"
-                      color="bg-indigo-500"
-                    />
-                    <VitalSignCard
-                      icon={Ruler}
-                      label="Height"
-                      value={vitalsHistory.current.height.value}
-                      unit=""
-                      status="normal"
-                      trend={null}
-                      date="Dec 28"
-                      color="bg-purple-500"
-                    />
-                  </div>
+                <div className="p-6 space-y-4">
+                  {medicalRecords.slice(0, 3).map((record) => (
+                    <div key={record.id} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                      onClick={() => handleViewRecord(record)}
+                    >
+                      <div className="bg-[#346ED6]/10 p-2 rounded-lg">
+                        <Stethoscope size={18} className="text-[#346ED6]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-medium text-gray-900">{record.diagnosis}</p>
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getSeverityColor(record.severity)}`}>
+                            {record.severity}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">{record.doctor} • {record.specialty}</p>
+                        <div className="flex items-center space-x-3 mt-2 text-xs text-gray-400">
+                          <span className="flex items-center space-x-1">
+                            <Calendar size={12} />
+                            <span>{record.date}</span>
+                          </span>
+                          <span>{record.type}</span>
+                        </div>
+                      </div>
+                      <ChevronRight size={16} className="text-gray-400 flex-shrink-0 mt-1" />
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Recent Records & Lab Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Recent Medical Records */}
-                <div className="bg-white rounded-xl border border-gray-100">
-                  <div className="p-6 border-b border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900">Recent Medical Records</h3>
+              {/* Recent Lab Results */}
+              <div className="bg-white rounded-xl border border-gray-100">
+                <div className="p-6 border-b border-gray-100">
+                  <h3 className="text-lg font-semibold text-gray-900">Lab Results Summary</h3>
+                </div>
+                <div className="p-6">
+                  <div className="space-y-3">
+                    {labResultsSummary.map((lab, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center space-x-3">
+                          <div className="bg-purple-100 p-2 rounded-lg">
+                            <FlaskConical size={16} className="text-purple-600" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{lab.category}</p>
+                            <p className="text-xs text-gray-500">{lab.count} tests • Last: {lab.lastTest}</p>
+                          </div>
+                        </div>
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${lab.status === 'up-to-date'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-yellow-100 text-yellow-700'
+                          }`}>
+                          {lab.status === 'up-to-date' ? (
+                            <CheckCircle2 size={12} className="mr-1" />
+                          ) : (
+                            <Clock4 size={12} className="mr-1" />
+                          )}
+                          {lab.status === 'up-to-date' ? 'Up to date' : 'Review needed'}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="p-6 space-y-4">
-                    {medicalRecords.slice(0, 3).map((record) => (
-                      <div key={record.id} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-                        onClick={() => handleViewRecord(record)}
-                      >
-                        <div className="bg-[#346ED6]/10 p-2 rounded-lg">
-                          <Stethoscope size={18} className="text-[#346ED6]" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm font-medium text-gray-900">{record.diagnosis}</p>
-                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getSeverityColor(record.severity)}`}>
-                              {record.severity}
-                            </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'vitals' && (
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900">Vital Signs History</h3>
+              <p className="text-sm text-gray-500 mt-1">Track your vital signs over time</p>
+            </div>
+            <div className="p-6">
+              <div className="space-y-6">
+                {/* Blood Pressure Trend */}
+                <div className="border border-gray-200 rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-900">Blood Pressure Trend</h4>
+                      <p className="text-xs text-gray-500">Last 12 months</p>
+                    </div>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                      Improving
+                    </span>
+                  </div>
+                  <div className="space-y-3">
+                    {vitalsHistory.trends.map((reading, index) => (
+                      <div key={index} className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <p className="text-sm text-gray-500 w-24">{reading.date}</p>
+                          <div className="flex items-center space-x-2">
+                            <div className="bg-blue-100 px-3 py-1 rounded-lg">
+                              <p className="text-sm font-medium text-blue-700">{reading.systolic}/{reading.diastolic}</p>
+                            </div>
+                            <span className="text-xs text-gray-400">mmHg</span>
                           </div>
-                          <p className="text-xs text-gray-500 mt-1">{record.doctor} • {record.specialty}</p>
-                          <div className="flex items-center space-x-3 mt-2 text-xs text-gray-400">
-                            <span className="flex items-center space-x-1">
-                              <Calendar size={12} />
-                              <span>{record.date}</span>
-                            </span>
-                            <span>{record.type}</span>
-                          </div>
                         </div>
-                        <ChevronRight size={16} className="text-gray-400 flex-shrink-0 mt-1" />
+                        <div className="w-32 bg-gray-200 rounded-full h-2">
+                          <div
+                            className="bg-blue-500 h-2 rounded-full"
+                            style={{ width: `${(reading.systolic / 140) * 100}%` }}
+                          ></div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Recent Lab Results */}
-                <div className="bg-white rounded-xl border border-gray-100">
-                  <div className="p-6 border-b border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900">Lab Results Summary</h3>
-                  </div>
-                  <div className="p-6">
-                    <div className="space-y-3">
-                      {labResultsSummary.map((lab, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center space-x-3">
-                            <div className="bg-purple-100 p-2 rounded-lg">
-                              <FlaskConical size={16} className="text-purple-600" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium text-gray-900">{lab.category}</p>
-                              <p className="text-xs text-gray-500">{lab.count} tests • Last: {lab.lastTest}</p>
-                            </div>
-                          </div>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${lab.status === 'up-to-date'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-yellow-100 text-yellow-700'
-                            }`}>
-                            {lab.status === 'up-to-date' ? (
-                              <CheckCircle2 size={12} className="mr-1" />
-                            ) : (
-                              <Clock4 size={12} className="mr-1" />
-                            )}
-                            {lab.status === 'up-to-date' ? 'Up to date' : 'Review needed'}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                {/* Other Vitals Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <VitalSignCard
+                    icon={Heart}
+                    label="Heart Rate"
+                    value={vitalsHistory.current.heartRate.value}
+                    unit="bpm"
+                    status="normal"
+                    trend="stable"
+                    date="Dec 28"
+                    color="bg-pink-500"
+                  />
+                  <VitalSignCard
+                    icon={Thermometer}
+                    label="Temperature"
+                    value={vitalsHistory.current.temperature.value}
+                    unit="°F"
+                    status="normal"
+                    trend="stable"
+                    date="Dec 28"
+                    color="bg-orange-500"
+                  />
+                  <VitalSignCard
+                    icon={Weight}
+                    label="Respiratory Rate"
+                    value={vitalsHistory.current.respiratoryRate.value}
+                    unit="breaths/min"
+                    status="normal"
+                    trend="stable"
+                    date="Dec 28"
+                    color="bg-cyan-500"
+                  />
+                  <VitalSignCard
+                    icon={HeartPulse}
+                    label="Oxygen Saturation"
+                    value={vitalsHistory.current.oxygenSaturation.value}
+                    unit="%"
+                    status="normal"
+                    trend="stable"
+                    date="Dec 28"
+                    color="bg-emerald-500"
+                  />
+                  <VitalSignCard
+                    icon={Weight}
+                    label="Weight"
+                    value={vitalsHistory.current.weight.value}
+                    unit="lbs"
+                    status="normal"
+                    trend="down"
+                    date="Dec 28"
+                    color="bg-indigo-500"
+                  />
+                  <VitalSignCard
+                    icon={Ruler}
+                    label="Height"
+                    value={vitalsHistory.current.height.value}
+                    unit={`(${vitalsHistory.current.height.equivalent} cm)`}
+                    status="normal"
+                    trend={null}
+                    date="Dec 28"
+                    color="bg-purple-500"
+                  />
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          {activeTab === 'vitals' && (
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-6 border-b border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900">Vital Signs History</h3>
-                <p className="text-sm text-gray-500 mt-1">Track your vital signs over time</p>
+        {activeTab === 'records' && (
+          <div className="space-y-4">
+            {/* Filters */}
+            <div className="bg-white rounded-xl border border-gray-100 p-4">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
+                  <option>All Departments</option>
+                  <option>Cardiology</option>
+                  <option>Dermatology</option>
+                  <option>Orthopedics</option>
+                  <option>General Medicine</option>
+                </select>
+                <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
+                  <option>All Types</option>
+                  <option>Consultation</option>
+                  <option>Annual Checkup</option>
+                  <option>Emergency</option>
+                </select>
+                <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
+                  <option>All Dates</option>
+                  <option>Last 3 Months</option>
+                  <option>Last 6 Months</option>
+                  <option>Last Year</option>
+                </select>
               </div>
-              <div className="p-6">
-                <div className="space-y-6">
-                  {/* Blood Pressure Trend */}
-                  <div className="border border-gray-200 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <h4 className="text-sm font-semibold text-gray-900">Blood Pressure Trend</h4>
-                        <p className="text-xs text-gray-500">Last 12 months</p>
+            </div>
+
+            {/* Records List */}
+            {medicalRecords.map((record) => (
+              <div key={record.id} className="bg-white rounded-xl border border-gray-100">
+                <div className="p-6">
+                  <div className="flex flex-col lg:flex-row gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h4 className="text-lg font-semibold text-gray-900">{record.diagnosis}</h4>
+                          <div className="flex items-center space-x-3 mt-1">
+                            <span className="text-sm text-gray-500">{record.doctor}</span>
+                            <span className="text-gray-300">•</span>
+                            <span className="text-sm text-gray-500">{record.specialty}</span>
+                          </div>
+                        </div>
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getSeverityColor(record.severity)}`}>
+                          {record.severity}
+                        </span>
                       </div>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                        Improving
-                      </span>
-                    </div>
-                    <div className="space-y-3">
-                      {vitalsHistory.trends.map((reading, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4">
-                            <p className="text-sm text-gray-500 w-24">{reading.date}</p>
-                            <div className="flex items-center space-x-2">
-                              <div className="bg-blue-100 px-3 py-1 rounded-lg">
-                                <p className="text-sm font-medium text-blue-700">{reading.systolic}/{reading.diastolic}</p>
-                              </div>
-                              <span className="text-xs text-gray-400">mmHg</span>
-                            </div>
-                          </div>
-                          <div className="w-32 bg-gray-200 rounded-full h-2">
-                            <div
-                              className="bg-blue-500 h-2 rounded-full"
-                              style={{ width: `${(reading.systolic / 140) * 100}%` }}
-                            ></div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
 
-                  {/* Other Vitals Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <VitalSignCard
-                      icon={Heart}
-                      label="Heart Rate"
-                      value={vitalsHistory.current.heartRate.value}
-                      unit="bpm"
-                      status="normal"
-                      trend="stable"
-                      date="Dec 28"
-                      color="bg-pink-500"
-                    />
-                    <VitalSignCard
-                      icon={Thermometer}
-                      label="Temperature"
-                      value={vitalsHistory.current.temperature.value}
-                      unit="°F"
-                      status="normal"
-                      trend="stable"
-                      date="Dec 28"
-                      color="bg-orange-500"
-                    />
-                    <VitalSignCard
-                      icon={Weight}
-                      label="Respiratory Rate"
-                      value={vitalsHistory.current.respiratoryRate.value}
-                      unit="breaths/min"
-                      status="normal"
-                      trend="stable"
-                      date="Dec 28"
-                      color="bg-cyan-500"
-                    />
-                    <VitalSignCard
-                      icon={HeartPulse}
-                      label="Oxygen Saturation"
-                      value={vitalsHistory.current.oxygenSaturation.value}
-                      unit="%"
-                      status="normal"
-                      trend="stable"
-                      date="Dec 28"
-                      color="bg-emerald-500"
-                    />
-                    <VitalSignCard
-                      icon={Weight}
-                      label="Weight"
-                      value={vitalsHistory.current.weight.value}
-                      unit="lbs"
-                      status="normal"
-                      trend="down"
-                      date="Dec 28"
-                      color="bg-indigo-500"
-                    />
-                    <VitalSignCard
-                      icon={Ruler}
-                      label="Height"
-                      value={vitalsHistory.current.height.value}
-                      unit={`(${vitalsHistory.current.height.equivalent} cm)`}
-                      status="normal"
-                      trend={null}
-                      date="Dec 28"
-                      color="bg-purple-500"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+                      <p className="text-sm text-gray-600 mb-4">{record.summary}</p>
 
-          {activeTab === 'records' && (
-            <div className="space-y-4">
-              {/* Filters */}
-              <div className="bg-white rounded-xl border border-gray-100 p-4">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
-                    <option>All Departments</option>
-                    <option>Cardiology</option>
-                    <option>Dermatology</option>
-                    <option>Orthopedics</option>
-                    <option>General Medicine</option>
-                  </select>
-                  <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
-                    <option>All Types</option>
-                    <option>Consultation</option>
-                    <option>Annual Checkup</option>
-                    <option>Emergency</option>
-                  </select>
-                  <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent">
-                    <option>All Dates</option>
-                    <option>Last 3 Months</option>
-                    <option>Last 6 Months</option>
-                    <option>Last Year</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Records List */}
-              {medicalRecords.map((record) => (
-                <div key={record.id} className="bg-white rounded-xl border border-gray-100">
-                  <div className="p-6">
-                    <div className="flex flex-col lg:flex-row gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="text-lg font-semibold text-gray-900">{record.diagnosis}</h4>
-                            <div className="flex items-center space-x-3 mt-1">
-                              <span className="text-sm text-gray-500">{record.doctor}</span>
-                              <span className="text-gray-300">•</span>
-                              <span className="text-sm text-gray-500">{record.specialty}</span>
-                            </div>
-                          </div>
-                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getSeverityColor(record.severity)}`}>
-                            {record.severity}
-                          </span>
-                        </div>
-
-                        <p className="text-sm text-gray-600 mb-4">{record.summary}</p>
-
-                        <div className="flex flex-wrap gap-3 text-xs text-gray-500">
-                          <span className="flex items-center space-x-1">
-                            <Calendar size={14} />
-                            <span>{record.date}</span>
-                          </span>
-                          <span className="flex items-center space-x-1">
-                            <Stethoscope size={14} />
-                            <span>{record.type}</span>
-                          </span>
-                          <span className="flex items-center space-x-1">
-                            <FileText size={14} />
-                            <span>{record.documents.length} documents</span>
-                          </span>
-                          {record.labResults.length > 0 && (
-                            <span className="flex items-center space-x-1">
-                              <FlaskConical size={14} />
-                              <span>{record.labResults.length} lab results</span>
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Lab Results Preview */}
+                      <div className="flex flex-wrap gap-3 text-xs text-gray-500">
+                        <span className="flex items-center space-x-1">
+                          <Calendar size={14} />
+                          <span>{record.date}</span>
+                        </span>
+                        <span className="flex items-center space-x-1">
+                          <Stethoscope size={14} />
+                          <span>{record.type}</span>
+                        </span>
+                        <span className="flex items-center space-x-1">
+                          <FileText size={14} />
+                          <span>{record.documents.length} documents</span>
+                        </span>
                         {record.labResults.length > 0 && (
-                          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {record.labResults.map((lab, idx) => (
-                              <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-                                <p className="text-xs text-gray-600">{lab.test}</p>
-                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                                  }`}>
-                                  {lab.result}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
+                          <span className="flex items-center space-x-1">
+                            <FlaskConical size={14} />
+                            <span>{record.labResults.length} lab results</span>
+                          </span>
                         )}
                       </div>
 
-                      <div className="lg:w-48 flex lg:flex-col gap-2">
-                        <button
-                          onClick={() => handleViewRecord(record)}
-                          className="flex-1 px-4 py-2 border border-[#346ED6] text-[#346ED6] rounded-lg text-sm font-medium hover:bg-[#346ED6]/5 transition-colors"
-                        >
-                          <Eye size={16} className="inline mr-1" />
-                          View Details
-                        </button>
-                        <button className="flex-1 px-4 py-2 bg-[#346ED6] text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
-                          <Download size={16} className="inline mr-1" />
-                          Download
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {activeTab === 'labs' && (
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-6 border-b border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900">Laboratory Results</h3>
-                <p className="text-sm text-gray-500 mt-1">Complete lab test history</p>
-              </div>
-              <div className="p-6">
-                <div className="space-y-6">
-                  {medicalRecords.filter(r => r.labResults.length > 0).map((record) => (
-                    <div key={record.id} className="border border-gray-200 rounded-xl p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div>
-                          <h4 className="text-sm font-semibold text-gray-900">{record.date}</h4>
-                          <p className="text-xs text-gray-500">{record.doctor} • {record.department}</p>
-                        </div>
-                        <span className="text-xs text-gray-400">ID: {record.id}</span>
-                      </div>
-                      <div className="overflow-x-auto">
-                        <table className="w-full">
-                          <thead>
-                            <tr className="border-b border-gray-200">
-                              <th className="text-left text-xs font-medium text-gray-500 pb-3">Test Name</th>
-                              <th className="text-left text-xs font-medium text-gray-500 pb-3">Result</th>
-                              <th className="text-left text-xs font-medium text-gray-500 pb-3">Reference Range</th>
-                              <th className="text-left text-xs font-medium text-gray-500 pb-3">Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {record.labResults.map((lab, idx) => (
-                              <tr key={idx} className="border-b border-gray-100 last:border-0">
-                                <td className="py-3 text-sm text-gray-900">{lab.test}</td>
-                                <td className="py-3 text-sm font-medium text-gray-900">{lab.result}</td>
-                                <td className="py-3 text-sm text-gray-500">{lab.range}</td>
-                                <td className="py-3">
-                                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                                    }`}>
-                                    {lab.status === 'normal' ? (
-                                      <CheckCircle2 size={12} className="mr-1" />
-                                    ) : (
-                                      <AlertCircle size={12} className="mr-1" />
-                                    )}
-                                    {lab.status}
-                                  </span>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'documents' && (
-            <div className="bg-white rounded-xl border border-gray-100">
-              <div className="p-6 border-b border-gray-100">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Documents & Reports</h3>
-                    <p className="text-sm text-gray-500 mt-1">All your medical documents in one place</p>
-                  </div>
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 text-sm">
-                    <Upload size={16} />
-                    <span>Upload</span>
-                  </button>
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="space-y-4">
-                  {medicalRecords.map((record) => (
-                    <div key={record.id}>
-                      <h4 className="text-sm font-semibold text-gray-900 mb-3">{record.date} - {record.diagnosis}</h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {record.documents.map((doc, idx) => (
-                          <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
-                            <div className="flex items-center space-x-3">
-                              <div className="bg-[#346ED6]/10 p-2 rounded-lg">
-                                <doc.icon size={18} className="text-[#346ED6]" />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-gray-900 truncate">{doc.name}</p>
-                                <p className="text-xs text-gray-500">{doc.type} • {doc.size}</p>
-                              </div>
+                      {/* Lab Results Preview */}
+                      {record.labResults.length > 0 && (
+                        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {record.labResults.map((lab, idx) => (
+                            <div key={idx} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                              <p className="text-xs text-gray-600">{lab.test}</p>
+                              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                }`}>
+                                {lab.result}
+                              </span>
                             </div>
-                            <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <button
-                                onClick={() => handleDownload(doc)}
-                                className="p-1.5 text-gray-400 hover:text-[#346ED6] hover:bg-white rounded-lg"
-                              >
-                                <Download size={16} />
-                              </button>
-                              <button className="p-1.5 text-gray-400 hover:text-[#346ED6] hover:bg-white rounded-lg">
-                                <Eye size={16} />
-                              </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="lg:w-48 flex lg:flex-col gap-2">
+                      <button
+                        onClick={() => handleViewRecord(record)}
+                        className="flex-1 px-4 py-2 border border-[#346ED6] text-[#346ED6] rounded-lg text-sm font-medium hover:bg-[#346ED6]/5 transition-colors"
+                      >
+                        <Eye size={16} className="inline mr-1" />
+                        View Details
+                      </button>
+                      <button className="flex-1 px-4 py-2 bg-[#346ED6] text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                        <Download size={16} className="inline mr-1" />
+                        Download
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'labs' && (
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900">Laboratory Results</h3>
+              <p className="text-sm text-gray-500 mt-1">Complete lab test history</p>
+            </div>
+            <div className="p-6">
+              <div className="space-y-6">
+                {medicalRecords.filter(r => r.labResults.length > 0).map((record) => (
+                  <div key={record.id} className="border border-gray-200 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900">{record.date}</h4>
+                        <p className="text-xs text-gray-500">{record.doctor} • {record.department}</p>
+                      </div>
+                      <span className="text-xs text-gray-400">ID: {record.id}</span>
+                    </div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-gray-200">
+                            <th className="text-left text-xs font-medium text-gray-500 pb-3">Test Name</th>
+                            <th className="text-left text-xs font-medium text-gray-500 pb-3">Result</th>
+                            <th className="text-left text-xs font-medium text-gray-500 pb-3">Reference Range</th>
+                            <th className="text-left text-xs font-medium text-gray-500 pb-3">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {record.labResults.map((lab, idx) => (
+                            <tr key={idx} className="border-b border-gray-100 last:border-0">
+                              <td className="py-3 text-sm text-gray-900">{lab.test}</td>
+                              <td className="py-3 text-sm font-medium text-gray-900">{lab.result}</td>
+                              <td className="py-3 text-sm text-gray-500">{lab.range}</td>
+                              <td className="py-3">
+                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${lab.status === 'normal' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                  }`}>
+                                  {lab.status === 'normal' ? (
+                                    <CheckCircle2 size={12} className="mr-1" />
+                                  ) : (
+                                    <AlertCircle size={12} className="mr-1" />
+                                  )}
+                                  {lab.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'documents' && (
+          <div className="bg-white rounded-xl border border-gray-100">
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Documents & Reports</h3>
+                  <p className="text-sm text-gray-500 mt-1">All your medical documents in one place</p>
+                </div>
+                <button className="flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 text-sm">
+                  <Upload size={16} />
+                  <span>Upload</span>
+                </button>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                {medicalRecords.map((record) => (
+                  <div key={record.id}>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3">{record.date} - {record.diagnosis}</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {record.documents.map((doc, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group">
+                          <div className="flex items-center space-x-3">
+                            <div className="bg-[#346ED6]/10 p-2 rounded-lg">
+                              <doc.icon size={18} className="text-[#346ED6]" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-gray-900 truncate">{doc.name}</p>
+                              <p className="text-xs text-gray-500">{doc.type} • {doc.size}</p>
                             </div>
                           </div>
-                        ))}
-                      </div>
+                          <div className="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button
+                              onClick={() => handleDownload(doc)}
+                              className="p-1.5 text-gray-400 hover:text-[#346ED6] hover:bg-white rounded-lg"
+                            >
+                              <Download size={16} />
+                            </button>
+                            <button className="p-1.5 text-gray-400 hover:text-[#346ED6] hover:bg-white rounded-lg">
+                              <Eye size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
-        </main>
-      </div>
+          </div>
+        )}
+      </main>
 
       {/* Record Detail Modal */}
       {showRecordModal && selectedRecord && (

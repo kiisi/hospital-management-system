@@ -12,7 +12,7 @@ const FAQ_ITEMS = [
 ];
 export default function FAQs() {
     return (
-        <section id="faq" className="py-20 md:py-28 bg-white border-t border-gray-100">
+        <section id="faqs" className="py-20 md:py-28 bg-white border-t border-gray-100">
             <div className="max-w-[720px] mx-auto px-6">
                 {/* Header */}
                 <motion.div
