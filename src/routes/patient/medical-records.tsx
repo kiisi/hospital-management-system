@@ -250,7 +250,7 @@ function RouteComponent() {
   const handleDownload = (document) => {
     console.log('Downloading:', document.name)
   }
-
+  const { patient } = Route.useRouteContext();
   return (
     <div>
       {/* Page Content */}
@@ -269,7 +269,7 @@ function RouteComponent() {
               <User size={24} className="text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold">{patientInfo.name}</h3>
+              <h3 className="text-lg font-semibold">{patient.firstName}{" "}{patient.lastName}</h3>
               <div className="flex items-center gap-2 mt-1 text-sm text-blue-100">
                 <span>ID: {patientInfo.id}</span>
                 <span className="text-blue-300">•</span>
