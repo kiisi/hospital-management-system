@@ -153,7 +153,7 @@ function PatientLayout() {
                 {/* Top Navigation Bar */}
                 <header className="sticky top-0 z-30 bg-white border-b border-gray-200">
                     <div className="px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-center justify-between h-16">
+                        <div className="flex items-center justify-between h-19">
                             {/* Mobile menu button */}
                             <button
                                 onClick={() => setSidebarOpen(true)}
@@ -161,17 +161,8 @@ function PatientLayout() {
                             >
                                 <Menu size={24} />
                             </button>
-
-                            {/* Search Bar */}
-                            <div className="flex-1 max-w-md ml-4 hidden sm:block">
-                                <div className="relative">
-                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                                    <input
-                                        type="text"
-                                        placeholder="Search appointments, records..."
-                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#346ED6] focus:border-transparent"
-                                    />
-                                </div>
+                            <div>
+                                {""}
                             </div>
 
                             {/* Right side icons */}
@@ -180,19 +171,6 @@ function PatientLayout() {
                                 <button className="relative p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100">
                                     <Bell size={20} />
                                     <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full"></span>
-                                </button>
-
-                                {/* Quick Actions */}
-                                <button className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-[#346ED6] text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                                    <Plus size={16} />
-                                    <span>Book Appointment</span>
-                                </button>
-
-                                {/* Mobile Profile */}
-                                <button className="lg:hidden p-1">
-                                    <div className="w-8 h-8 bg-[#346ED6] rounded-full flex items-center justify-center">
-                                        <User size={16} className="text-white" />
-                                    </div>
                                 </button>
                             </div>
                         </div>
