@@ -65,8 +65,8 @@ export function WhoBenefits() {
                         className="text-[#346ED6] semibold flex items-center"
                       >
                         Join us now!
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                          <path d="M8.33203 13.3333L11.3707 10.2946C11.5335 10.1318 11.5335 9.86804 11.3707 9.70534L8.33203 6.66654" stroke="#346ED6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 20 20" fill="none">
+                          <path d="M8.33203 13.3333L11.3707 10.2946C11.5335 10.1318 11.5335 9.86804 11.3707 9.70534L8.33203 6.66654" stroke="#346ED6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </a>
                     </div>

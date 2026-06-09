@@ -29,6 +29,7 @@ import { Route as RegisterPatientIndexRouteImport } from './routes/register/pati
 import { Route as RegisterDoctorIndexRouteImport } from './routes/register/doctor/index'
 import { Route as LoginPatientIndexRouteImport } from './routes/login/patient/index'
 import { Route as LoginDoctorIndexRouteImport } from './routes/login/doctor/index'
+import { Route as ApiAppointmentsIndexRouteImport } from './routes/api/appointments/index'
 import { Route as ApiAuthLogoutRouteImport } from './routes/api/auth/logout'
 
 const PatientRoute = PatientRouteImport.update({
@@ -131,6 +132,11 @@ const LoginDoctorIndexRoute = LoginDoctorIndexRouteImport.update({
   path: '/login/doctor/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAppointmentsIndexRoute = ApiAppointmentsIndexRouteImport.update({
+  id: '/api/appointments/',
+  path: '/api/appointments/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthLogoutRoute = ApiAuthLogoutRouteImport.update({
   id: '/api/auth/logout',
   path: '/api/auth/logout',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/patient/': typeof PatientIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/appointments/': typeof ApiAppointmentsIndexRoute
   '/login/doctor/': typeof LoginDoctorIndexRoute
   '/login/patient/': typeof LoginPatientIndexRoute
   '/register/doctor/': typeof RegisterDoctorIndexRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/patient': typeof PatientIndexRoute
   '/register': typeof RegisterIndexRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/appointments': typeof ApiAppointmentsIndexRoute
   '/login/doctor': typeof LoginDoctorIndexRoute
   '/login/patient': typeof LoginPatientIndexRoute
   '/register/doctor': typeof RegisterDoctorIndexRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/patient/': typeof PatientIndexRoute
   '/register/': typeof RegisterIndexRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/appointments/': typeof ApiAppointmentsIndexRoute
   '/login/doctor/': typeof LoginDoctorIndexRoute
   '/login/patient/': typeof LoginPatientIndexRoute
   '/register/doctor/': typeof RegisterDoctorIndexRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/patient/'
     | '/register/'
     | '/api/auth/logout'
+    | '/api/appointments/'
     | '/login/doctor/'
     | '/login/patient/'
     | '/register/doctor/'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/patient'
     | '/register'
     | '/api/auth/logout'
+    | '/api/appointments'
     | '/login/doctor'
     | '/login/patient'
     | '/register/doctor'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/patient/'
     | '/register/'
     | '/api/auth/logout'
+    | '/api/appointments/'
     | '/login/doctor/'
     | '/login/patient/'
     | '/register/doctor/'
@@ -282,6 +294,7 @@ export interface RootRouteChildren {
   LoginIndexRoute: typeof LoginIndexRoute
   RegisterIndexRoute: typeof RegisterIndexRoute
   ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
+  ApiAppointmentsIndexRoute: typeof ApiAppointmentsIndexRoute
   LoginDoctorIndexRoute: typeof LoginDoctorIndexRoute
   LoginPatientIndexRoute: typeof LoginPatientIndexRoute
   RegisterDoctorIndexRoute: typeof RegisterDoctorIndexRoute
@@ -430,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginDoctorIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/appointments/': {
+      id: '/api/appointments/'
+      path: '/api/appointments'
+      fullPath: '/api/appointments/'
+      preLoaderRoute: typeof ApiAppointmentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/logout': {
       id: '/api/auth/logout'
       path: '/api/auth/logout'
@@ -487,6 +507,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginIndexRoute: LoginIndexRoute,
   RegisterIndexRoute: RegisterIndexRoute,
   ApiAuthLogoutRoute: ApiAuthLogoutRoute,
+  ApiAppointmentsIndexRoute: ApiAppointmentsIndexRoute,
   LoginDoctorIndexRoute: LoginDoctorIndexRoute,
   LoginPatientIndexRoute: LoginPatientIndexRoute,
   RegisterDoctorIndexRoute: RegisterDoctorIndexRoute,

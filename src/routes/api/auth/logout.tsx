@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/api/auth/logout')({
-    component: RouteComponent,
     server: {
         handlers: {
             POST: async ({ request }) => {
@@ -10,13 +9,6 @@ export const Route = createFileRoute('/api/auth/logout')({
                     const cookies = request.headers.get('cookie') || ''
                     const sessionCookie = cookies.split(';').find(c => c.trim().startsWith('session='))
 
-                    if (sessionCookie) {
-                        const sessionId = sessionCookie.split('=')[1]
-
-                        // Delete session from database
-                        // await deleteCookie(sessionId)
-                    }
-                    
                     return new Response(null, {
                         status: 302,
                         headers: {
@@ -33,7 +25,3 @@ export const Route = createFileRoute('/api/auth/logout')({
         },
     }
 })
-
-function RouteComponent() {
-    return <div>Hello "/api/auth/logout"!</div>
-}

@@ -5,6 +5,7 @@ export interface IDoctor {
   userId: Types.ObjectId;
   firstName: string;
   lastName: string;
+  email: string;
   specialization: string;
   phoneNumber: string;
   hospitalName: string;
@@ -15,6 +16,7 @@ export interface IDoctor {
     startTime: string;
     endTime: string;
   }[];
+  isAvailable: boolean;
 }
 
 const DoctorSchema = new Schema<IDoctor>(
@@ -24,6 +26,7 @@ const DoctorSchema = new Schema<IDoctor>(
       ref: "User",
       required: true,
     },
+    email: { type: String, required: true, unique: true, trim: true },
     firstName: {
       type: String,
       required: true,
@@ -47,6 +50,10 @@ const DoctorSchema = new Schema<IDoctor>(
         endTime: String,
       },
     ],
+    isAvailable: {
+      type: Boolean,
+      default: true
+    }
   },
   { timestamps: true }
 );

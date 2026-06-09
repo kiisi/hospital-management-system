@@ -36,6 +36,7 @@
 @layer base {
   * {
     box-sizing: border-box;
+    outline-color: #346ED6;
   }
 
   html {

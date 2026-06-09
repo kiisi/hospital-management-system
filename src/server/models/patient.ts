@@ -12,8 +12,6 @@ export interface IPatient {
   bloodGroup?: string;
   isActive?: boolean;
   lastLogin?: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 const PatientSchema = new mongoose.Schema<IPatient>(

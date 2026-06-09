@@ -12,9 +12,9 @@ const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     devtools(),
-    nitro({ 
+    nitro({
       rollupConfig: { external: [/^@sentry\//] }
-     }),
+    }),
     tailwindcss(),
     tanstackStart(),
     viteReact(),

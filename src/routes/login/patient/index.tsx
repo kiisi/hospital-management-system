@@ -1,9 +1,7 @@
 import { Input } from '@/components/ui/Input'
-import { getData } from '@/server/auth/login.function'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useServerFn } from '@tanstack/react-start'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { dbConnect } from '@/server/db.server'
+import { useMutation } from '@tanstack/react-query'
+import { dbConnect } from '@/server/db'
 import { UserModel } from '@/server/models/user'
 import { UserRole } from '../../../../types/enum'
 import bcrypt from 'bcryptjs'
@@ -12,6 +10,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Button } from '@/components/ui/button'
 import { ErrorFeedback } from '@/components/toast'
+import { createSession } from '@/server/auth/index.server'
 
 export const Route = createFileRoute("/login/patient/")({
   component: RouteComponent,
@@ -69,6 +68,8 @@ export const Route = createFileRoute("/login/patient/")({
             email: user.email,
             role: user.role,
           });
+
+          await createSession(session.id ?? '', user.id, user.role);
 
           return Response.json(
             {

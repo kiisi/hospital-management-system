@@ -1,5 +1,5 @@
 import { LogoutModal } from '@/components/modals/LogoutModal';
-import { dbConnect } from '@/server/db.server';
+import { dbConnect } from '@/server/db';
 import { PatientModel } from '@/server/models/patient';
 import { useAppSession } from '@/server/session';
 import { createFileRoute, Link, Outlet, redirect, useLocation, useNavigate } from '@tanstack/react-router'
@@ -62,17 +62,15 @@ function PatientLayout() {
 
     const [isLogoutModelOpen, setLogoutModalOpen] = useState(false)
 
-    console.log(isLogoutModelOpen)
-
     const navigationItems = [
         { id: 'dashboard', path: "/patient", label: 'Dashboard', icon: Home },
         { id: 'appointments', path: "/patient/appointments", label: 'Appointments', icon: CalendarDays },
         { id: 'medical-records', path: "/patient/medical-records", label: 'Medical Records', icon: ClipboardList },
         { id: 'prescriptions', path: "/patient/prescriptions", label: 'Prescriptions', icon: Pill },
-        // { id: 'billing', path: "/patient/billing", label: 'Billing & Payments', icon: Receipt },
-        // { id: 'messages', path: "/patient/messages", label: 'Messages', icon: MessageSquare },
         { id: 'settings', path: "/patient/settings", label: 'Settings', icon: Settings },
     ]
+
+    console.log(sidebarOpen)
 
     return (
         <div className="min-h-screen bg-gray-50">

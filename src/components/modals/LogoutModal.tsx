@@ -43,7 +43,7 @@ export function LogoutModal({
             <Modal
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
-                className="bg-white rounded-[16px] p-[32px] max-w-[600px]"
+                className="bg-white rounded-[16px] p-[32px] max-w-[500px]"
             >
                 <div className="text-center">
                     {/* Icon */}

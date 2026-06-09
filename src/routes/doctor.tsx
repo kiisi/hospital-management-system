@@ -10,6 +10,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { LogoutModal } from '@/components/modals/LogoutModal';
 
 export const Route = createFileRoute('/doctor')({
   component: RouteComponent,
@@ -18,6 +19,8 @@ export const Route = createFileRoute('/doctor')({
 function RouteComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+
+  const [isLogoutModelOpen, setLogoutModalOpen] = useState(false)
 
   // Sample data
   const [todayAppointments] = useState([
@@ -150,7 +153,9 @@ function RouteComponent() {
 
         {/* Logout */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100">
-          <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
+          <button
+            onClick={() => setLogoutModalOpen(true)}
+            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors">
             <LogOut size={18} />
             <span className="text-sm font-medium">Sign Out</span>
           </button>
@@ -158,6 +163,11 @@ function RouteComponent() {
       </div>
 
       <Outlet />
+
+      <LogoutModal
+        isLogoutModalOpen={isLogoutModelOpen}
+        setLogoutModalOpen={setLogoutModalOpen}
+      />
     </div>
   );
 }

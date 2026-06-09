@@ -7,12 +7,13 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Button } from '@/components/ui/button'
 import { ErrorFeedback } from '@/components/toast'
-import { dbConnect } from '@/server/db.server'
+import { dbConnect } from '@/server/db'
 import { UserModel } from '@/server/models/user'
 import { useAppSession } from '@/server/session'
 import bcrypt from 'bcryptjs'
 import { UserRole } from '../../../../types/enum'
 import { PatientModel } from '@/server/models/patient';
+import { createSession } from '@/server/auth/index.server';
 
 export const registerPatientSchema = Yup.object({
   firstName: Yup.string()
@@ -74,6 +75,8 @@ export const Route = createFileRoute('/register/patient/')({
             role: user.role
           })
 
+          await createSession(session.id ?? '', user.id, user.role);
+
           return Response.json({
             success: true,
             message: "Registration successfully",
@@ -119,7 +122,7 @@ function RouteComponent() {
   });
 
   console.log("Data: ", data);
-  if(data?.success) {
+  if (data?.success) {
     window.location.href = "/patient";
   }
 

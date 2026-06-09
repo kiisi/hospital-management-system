@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/Input'
-import { dbConnect } from '@/server/db.server';
+import { dbConnect } from '@/server/db';
 import { UserModel } from '@/server/models/user';
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { UserRole } from '../../../../types/enum';
@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import { useMutation } from '@tanstack/react-query';
 import { ErrorFeedback } from '@/components/toast';
 import { Button } from '@/components/ui/button';
+import { createSession } from '@/server/auth/index.server';
 
 export const Route = createFileRoute('/login/doctor/')({
   component: RouteComponent,
@@ -67,6 +68,8 @@ export const Route = createFileRoute('/login/doctor/')({
             email: user.email,
             role: user.role,
           });
+
+          await createSession(session.id ?? '', user.id, user.role);
 
           return Response.json(
             {

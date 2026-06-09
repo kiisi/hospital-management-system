@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { createContext, useContext } from 'react'
 import { useServerFn } from '@tanstack/react-start'
-import { getCurrentUserFn } from '@/server/auth/index.function'
 import { useQuery } from '@tanstack/react-query'
+import { getCurrentUserFn } from '@/server/auth/index.function'
 
 type User = {
   id: string
